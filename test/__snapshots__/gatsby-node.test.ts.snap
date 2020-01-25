@@ -6,21 +6,45 @@ exports[`sourceNodes creates nodes 1`] = `
     Array [
       Object {
         "collectionName": "name",
-        "hasNextPage": false,
+        "hasNextPage": true,
         "hasPreviousPage": false,
         "id": "createNodeId",
         "internal": Object {
           "contentDigest": "createContentDigest",
           "type": "PaginatedCollectionPage",
         },
-        "nextPage": undefined,
-        "nodeCount": 2,
+        "nextPage": "createNodeId",
+        "nodeCount": 10,
         "nodes": Array [
           Object {
             "foo": "bar",
           },
           Object {
-            "foo": "baz",
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
           },
         ],
         "page": "createNodeId",
@@ -29,24 +53,183 @@ exports[`sourceNodes creates nodes 1`] = `
     ],
     Array [
       Object {
-        "firstPageSize": 2,
+        "collectionName": "name",
+        "hasNextPage": true,
+        "hasPreviousPage": true,
+        "id": "createNodeId",
+        "internal": Object {
+          "contentDigest": "createContentDigest",
+          "type": "PaginatedCollectionPage",
+        },
+        "nextPage": "createNodeId",
+        "nodeCount": 10,
+        "nodes": Array [
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+        ],
+        "page": "createNodeId",
+        "previousPage": "createNodeId",
+      },
+    ],
+    Array [
+      Object {
+        "collectionName": "name",
+        "hasNextPage": true,
+        "hasPreviousPage": true,
+        "id": "createNodeId",
+        "internal": Object {
+          "contentDigest": "createContentDigest",
+          "type": "PaginatedCollectionPage",
+        },
+        "nextPage": "createNodeId",
+        "nodeCount": 10,
+        "nodes": Array [
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+        ],
+        "page": "createNodeId",
+        "previousPage": "createNodeId",
+      },
+    ],
+    Array [
+      Object {
+        "collectionName": "name",
+        "hasNextPage": false,
+        "hasPreviousPage": true,
+        "id": "createNodeId",
+        "internal": Object {
+          "contentDigest": "createContentDigest",
+          "type": "PaginatedCollectionPage",
+        },
+        "nextPage": undefined,
+        "nodeCount": 10,
+        "nodes": Array [
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "bar",
+          },
+        ],
+        "page": "createNodeId",
+        "previousPage": "createNodeId",
+      },
+    ],
+    Array [
+      Object {
+        "firstPageSize": 10,
         "id": "createNodeId",
         "internal": Object {
           "contentDigest": "createContentDigest",
           "type": "PaginatedCollection",
         },
-        "lastPageSize": 2,
+        "lastPageSize": 10,
         "name": "name",
         "pageSize": 10,
         "pages": Array [
           "createNodeId",
+          "createNodeId",
+          "createNodeId",
+          "createNodeId",
         ],
-        "totalNodeCount": 2,
-        "totalPages": 1,
+        "totalNodeCount": 40,
+        "totalPages": 4,
       },
     ],
   ],
   "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
     Object {
       "type": "return",
       "value": undefined,

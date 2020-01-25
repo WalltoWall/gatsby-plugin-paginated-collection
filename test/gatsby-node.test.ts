@@ -114,7 +114,7 @@ const mockGatsbyContext: CreatePagesArgs & {
 const mockQueryResult = {
   data: {
     allNode: {
-      edges: [{ foo: 'bar' }, { foo: 'baz' }],
+      edges: Array(40).fill({ foo: 'bar' }),
     },
   },
 }

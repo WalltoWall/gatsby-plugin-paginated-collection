@@ -70,7 +70,7 @@ const createPageNode = (
     nextPage: nextChunkTuple?.[0],
     hasNextPage: Boolean(nextChunkTuple),
     previousPage: previousChunkTuple?.[0],
-    hasPreviousPage: Boolean(nextChunkTuple),
+    hasPreviousPage: Boolean(previousChunkTuple),
     nodeCount: chunk.length,
     nodes: chunk,
     internal: {
