@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sourceNodes creates nodes 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "collectionName": "name",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "id": "createNodeId",
+        "internal": Object {
+          "contentDigest": "createContentDigest",
+          "type": "PaginatedCollectionPage",
+        },
+        "nextPage": undefined,
+        "nodeCount": 2,
+        "nodes": Array [
+          Object {
+            "foo": "bar",
+          },
+          Object {
+            "foo": "baz",
+          },
+        ],
+        "page": "createNodeId",
+        "previousPage": undefined,
+      },
+    ],
+    Array [
+      Object {
+        "firstPageSize": 2,
+        "id": "createNodeId",
+        "internal": Object {
+          "contentDigest": "createContentDigest",
+          "type": "PaginatedCollection",
+        },
+        "lastPageSize": 2,
+        "name": "name",
+        "pageSize": 10,
+        "pages": Array [
+          "createNodeId",
+        ],
+        "totalNodeCount": 2,
+        "totalPages": 1,
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
