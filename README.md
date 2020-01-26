@@ -1,8 +1,18 @@
-# gatsby-source-prismic-schemas
+# gatsby-plugin-paginated-collection
 
-Source plugin for pulling data into [Gatsby][gatsby] from an [ArcGIS Feature
-Service][arcgis-feature-service] via [ArcGIS REST
-API][arcgis-feature-service-rest-api].
+Gatsby plugin which paginates a collection of data from your sources. This
+plugin tries to be unopinionated in the the data is used.
+
+For example, you could use the pagination information to:
+
+- Create a page within your site for each page of data.
+- Create true client-side "Load More" by saving JSON files for each page of
+  data.
+- Create next/previous buttons for articles on your site.
+
+You can use this plugin multiple times per site for different collections of
+data. For example, you could paginate blog posts and products individually by
+using the plugin twice.
 
 ## Table of Contents
 
@@ -10,58 +20,92 @@ API][arcgis-feature-service-rest-api].
 - [Install](#install)
 - [How to use](#how-to-use)
 - [How to query](#how-to-query)
-  - [Query Geometry](#query-geometry)
-  - [Query Properties](#query-properties)
-  - [Query Polylabel](#query-polylabel)
-- [Site's `gatsby-node.js` example](#sites-gatsby-nodejs-example)
+  - [Query Pages](#query-pages)
 
 ## Features
 
-- Fetches feature data from an ArcGIS Feature Service
+- Groups data into pages of any size.
+- Provides helpful pagination information like `hasNextPage` and `totalPages`.
+- Collects your data to paginate using a GraphQL query. This could include data
+  from multiple sources.
 
 ## Install
 
 ```sh
-npm install --save gatsby-source-arcgis-feature-service
+npm install --save gatsby-source-paginated-collection
 ```
 
 ## How to use
 
-```js
+```javascript
 // In your gatsby-config.js
 plugins: [
-  /*
-   * Gatsby's data processing layer begins with “source”
-   * plugins. Here the site sources its data from an ArcGIS Feature Service.
+  /**
+   * You can have multiple instances of this plugin to create separate
+   * collections of data using different names.
    */
   {
-    resolve: "gatsby-source-arcgis-feature-service",
+    resolve: 'gatsby-source-paginated-collection',
     options: {
-      // The url of your ArcGIS Feature Service. This is required.
-      url: "https://<catalog-url>/<serviceName>/FeatureServer",
+      /**
+       * A name to identify your collection. If you have multiple instances of
+       * this plugin, this will allow you to identify each collection. This is
+       * required.
+       */
+      name: 'blogPosts',
 
-      // A name to identify your feature data. If you have multiple instances
-      // of this source plugin, this will allow you to filter features. This is
-      // optional.
-      name: "myProject",
+      /**
+       * GraphQL query used to fetch all data for the collection. All data
+       * returned from the query will be available in the normalizer function
+       * to shape your data. This is required.
+       */
+      query: `
+        {
+          allMarkdownRemark {
+            nodes {
+              id
+              frontmatter {
+                path
+                title
+                excerpt
+              }
+            }
+          }
+        }
+      `,
 
-      // Set the request parameters to filter the feature data returned from
-      // the server. This is optional. The following parameters are the
-      // defaults: request all features and fields in GeoJSON format.
-      params: {
-        f: "geojson",
-        where: "1=1",
-        outFields: "*"
-      }
-    }
-  }
-];
+      /**
+       * The number of nodes to include in each page. Default: 10.
+       */
+      pageSize: 10,
+
+      /**
+       * The number of nodes to include in the first page. This is optional. If
+       * no value is given, the first page will be the same size as all other
+       * pages.
+       */
+      firstPageSize: 16,
+
+      /**
+       * Function used to map the result of the GraphQL query to nodes in the
+       * collection. This should return an array of items to paginate. This is
+       * required.
+       */
+      normalizer: ({ data }) =>
+        data.allMarkdownRemark.nodes.map(node => ({
+          id: node.id,
+          path: node.frontmatter.path,
+          title: node.frontmatter.title,
+          excerpt: node.frontmatter.excerpt,
+        })),
+    },
+  },
+]
 ```
 
 ## How to query
 
-You can query nodes created from your ArcGIS Feature Service using GraphQL like
-the following:
+You can query your collections using GraphQL like the following:
 
 **Note**: Learn to use the GraphQL tool and Ctrl+Spacebar at
 <http://localhost:8000/___graphql> to discover the types and properties of your
@@ -69,128 +113,39 @@ GraphQL model.
 
 ```graphql
 {
-  allArcGisFeature {
-    nodes {
+  paginatedCollection {
+    pages {
       id
-      type
+      nodes
     }
   }
 }
 ```
 
-All features are pulled from your server and created as `arcGisFeature` and
-`allArcGisFeature`.
-
-If you provide `name` as a plugin option, all features include a `sourceName`
-field with that value which allows you to filter your features.
+If you have multiple instances of this plugin, you can use the name argument to
+query a specific collection.
 
 ```graphql
 {
-  allArcGisFeature(filter: { sourceName: { eq: "myProject" } }) {
-    nodes {
+  paginatedCollection(name: { eq: "blogPosts" }) {
+    pages {
       id
-      type
+      nodes
     }
   }
 }
 ```
 
-### Query Geometry
+### Query Pages
 
-Geometry data for each feature is provided on the `geometry` field per the
-GeoJSON standard.
-
-Geometry data within a feature can vary in object shape due to the different
-types of geometry (e.g. Point, Polygon, LineString). To ensure all geometry
-types can be queried reliably, the `geometry` field is provided as JSON. This
-means you can query `geometry` and receive deeper data without explicitly
-stating its fields.
+TODO
 
 ```graphql
 {
-  allArcGisFeature {
-    nodes {
+  paginatedCollection {
+    pages {
       id
-      geometry
     }
   }
 }
 ```
-
-### Query Properties
-
-Property data for each feature is provided on the `properties` field.
-
-The subfields available on this field is determined by the data returned from
-the ArcGIS Feature Service.
-
-```graphql
-{
-  allArcGisFeature {
-    nodes {
-      id
-      properties {
-        name
-        status
-      }
-    }
-  }
-}
-```
-
-### Query Polylabel
-
-Polylabel data is provided on the `polylabel` field for `Polygon` features. If a feature is not a `Polygon`, `polylabel` will be `null`.
-
-`polylabel` is the optimal point within a polygon to place a marker or label
-provided as a [lng, lat] pair.
-
-See [Mapbox's official Polylabel documentation][polylabel] for more details.
-
-```graphql
-{
-  allArcGisFeature {
-    nodes {
-      id
-      polylabel
-    }
-  }
-}
-```
-
-## Site's `gatsby-node.js` example
-
-```js
-const path = require("path");
-
-exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions;
-
-  const features = await graphql(`
-    {
-      allArcGisFeature {
-        nodes {
-          id
-          featureId
-        }
-      }
-    }
-  `);
-
-  features.data.allArcGisFeature.nodes.forEach(node => {
-    createPage({
-      path: `/${node.geoJsonId}`,
-      component: path.resolve("./src/templates/feature.js"),
-      context: {
-        id: node.id,
-        featureId: node.featureId
-      }
-    });
-  });
-};
-```
-
-[gatsby]: https://www.gatsbyjs.org/
-[arcgis-feature-service]: https://enterprise.arcgis.com/en/server/latest/publish-services/linux/what-is-a-feature-service-.htm
-[arcgis-feature-service-rest-api]: https://developers.arcgis.com/rest/services-reference/feature-service.htm
-[polylabel]: https://github.com/mapbox/polylabel
