@@ -17,34 +17,34 @@ exports[`sourceNodes creates nodes 1`] = `
         "nodeCount": 10,
         "nodes": Array [
           Object {
-            "foo": "bar",
+            "foo": 0,
           },
           Object {
-            "foo": "bar",
+            "foo": 1,
           },
           Object {
-            "foo": "bar",
+            "foo": 2,
           },
           Object {
-            "foo": "bar",
+            "foo": 3,
           },
           Object {
-            "foo": "bar",
+            "foo": 4,
           },
           Object {
-            "foo": "bar",
+            "foo": 5,
           },
           Object {
-            "foo": "bar",
+            "foo": 6,
           },
           Object {
-            "foo": "bar",
+            "foo": 7,
           },
           Object {
-            "foo": "bar",
+            "foo": 8,
           },
           Object {
-            "foo": "bar",
+            "foo": 9,
           },
         ],
         "page": "createNodeId",
@@ -65,34 +65,34 @@ exports[`sourceNodes creates nodes 1`] = `
         "nodeCount": 10,
         "nodes": Array [
           Object {
-            "foo": "bar",
+            "foo": 10,
           },
           Object {
-            "foo": "bar",
+            "foo": 11,
           },
           Object {
-            "foo": "bar",
+            "foo": 12,
           },
           Object {
-            "foo": "bar",
+            "foo": 13,
           },
           Object {
-            "foo": "bar",
+            "foo": 14,
           },
           Object {
-            "foo": "bar",
+            "foo": 15,
           },
           Object {
-            "foo": "bar",
+            "foo": 16,
           },
           Object {
-            "foo": "bar",
+            "foo": 17,
           },
           Object {
-            "foo": "bar",
+            "foo": 18,
           },
           Object {
-            "foo": "bar",
+            "foo": 19,
           },
         ],
         "page": "createNodeId",
@@ -113,34 +113,34 @@ exports[`sourceNodes creates nodes 1`] = `
         "nodeCount": 10,
         "nodes": Array [
           Object {
-            "foo": "bar",
+            "foo": 20,
           },
           Object {
-            "foo": "bar",
+            "foo": 21,
           },
           Object {
-            "foo": "bar",
+            "foo": 22,
           },
           Object {
-            "foo": "bar",
+            "foo": 23,
           },
           Object {
-            "foo": "bar",
+            "foo": 24,
           },
           Object {
-            "foo": "bar",
+            "foo": 25,
           },
           Object {
-            "foo": "bar",
+            "foo": 26,
           },
           Object {
-            "foo": "bar",
+            "foo": 27,
           },
           Object {
-            "foo": "bar",
+            "foo": 28,
           },
           Object {
-            "foo": "bar",
+            "foo": 29,
           },
         ],
         "page": "createNodeId",
@@ -161,34 +161,34 @@ exports[`sourceNodes creates nodes 1`] = `
         "nodeCount": 10,
         "nodes": Array [
           Object {
-            "foo": "bar",
+            "foo": 30,
           },
           Object {
-            "foo": "bar",
+            "foo": 31,
           },
           Object {
-            "foo": "bar",
+            "foo": 32,
           },
           Object {
-            "foo": "bar",
+            "foo": 33,
           },
           Object {
-            "foo": "bar",
+            "foo": 34,
           },
           Object {
-            "foo": "bar",
+            "foo": 35,
           },
           Object {
-            "foo": "bar",
+            "foo": 36,
           },
           Object {
-            "foo": "bar",
+            "foo": 37,
           },
           Object {
-            "foo": "bar",
+            "foo": 38,
           },
           Object {
-            "foo": "bar",
+            "foo": 39,
           },
         ],
         "page": "createNodeId",
