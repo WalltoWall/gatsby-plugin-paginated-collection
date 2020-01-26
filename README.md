@@ -55,6 +55,18 @@ plugins: [
       name: 'blogPosts',
 
       /**
+       * The number of nodes to include in each page. Default: 10.
+       */
+      pageSize: 10,
+
+      /**
+       * The number of nodes to include in the first page. This is optional. If
+       * no value is given, the first page will be the same size as all other
+       * pages.
+       */
+      firstPageSize: 16,
+
+      /**
        * GraphQL query used to fetch all data for the collection. All data
        * returned from the query will be available in the normalizer function
        * to shape your data. This is required.
@@ -73,18 +85,6 @@ plugins: [
           }
         }
       `,
-
-      /**
-       * The number of nodes to include in each page. Default: 10.
-       */
-      pageSize: 10,
-
-      /**
-       * The number of nodes to include in the first page. This is optional. If
-       * no value is given, the first page will be the same size as all other
-       * pages.
-       */
-      firstPageSize: 16,
 
       /**
        * Function used to map the result of the GraphQL query to nodes in the
