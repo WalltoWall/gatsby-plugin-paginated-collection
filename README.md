@@ -6,8 +6,8 @@ This plugin tries to be unopinionated in how you use the paginated data. For
 example, you could use the pagination information to:
 
 - Create a page within your site for each page of data.
-- Create true client-side "Load More" by saving JSON files for each page of
-  data.
+- Create true client-side "Load More" functionality by saving JSON files for
+  each page of data.
 - Create next/previous buttons for articles on your site.
 
 You can use this plugin multiple times per site for different collections of
