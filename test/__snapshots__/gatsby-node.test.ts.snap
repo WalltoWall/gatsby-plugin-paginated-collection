@@ -37,8 +37,8 @@ exports[`createSchemaCustomization creates types 1`] = `
     \\"Index of the page within the collection.\\"
     index: Int!
 
-    \\"Name of the collection to which this page belongs.\\"
-    collectionName: String!
+    \\"The collection to which this page belongs.\\"
+    collection: PaginatedCollection! @link
 
     \\"The next page.\\"
     nextPage: PaginatedCollectionPage @link
@@ -75,7 +75,7 @@ exports[`sourceNodes creates nodes 1`] = `
   "calls": Array [
     Array [
       Object {
-        "collectionName": "name",
+        "collection": "createNodeId",
         "hasNextPage": true,
         "hasPreviousPage": false,
         "id": "createNodeId",
@@ -123,7 +123,7 @@ exports[`sourceNodes creates nodes 1`] = `
     ],
     Array [
       Object {
-        "collectionName": "name",
+        "collection": "createNodeId",
         "hasNextPage": true,
         "hasPreviousPage": true,
         "id": "createNodeId",
@@ -171,7 +171,7 @@ exports[`sourceNodes creates nodes 1`] = `
     ],
     Array [
       Object {
-        "collectionName": "name",
+        "collection": "createNodeId",
         "hasNextPage": true,
         "hasPreviousPage": true,
         "id": "createNodeId",
@@ -219,7 +219,7 @@ exports[`sourceNodes creates nodes 1`] = `
     ],
     Array [
       Object {
-        "collectionName": "name",
+        "collection": "createNodeId",
         "hasNextPage": false,
         "hasPreviousPage": true,
         "id": "createNodeId",

@@ -50,22 +50,21 @@ export const chunk = <T>(size: number, arr: T[]): T[][] =>
  */
 const createPageNode = (
   chunk: Node[],
-  id: string,
+  id: ID,
   index: number,
   chunkTuples: [ID, Node[]][],
+  collectionId: ID,
   gatsbyContext: CreatePagesArgs,
-  pluginOptions: PluginOptions,
 ): PageNodeInput => {
   const { actions, createContentDigest } = gatsbyContext
   const { createNode } = actions
-  const { name } = pluginOptions
 
   const nextChunkTuple = chunkTuples[index + 1]
   const previousChunkTuple = chunkTuples[index - 1]
 
   const node: PageNodeInput = {
     id,
-    collectionName: name,
+    collection: collectionId,
     index,
     nextPage: nextChunkTuple?.[0],
     hasNextPage: Boolean(nextChunkTuple),
@@ -102,13 +101,15 @@ export const createCollectionNode = (
   const { createNode } = actions
   const { name, pageSize } = pluginOptions
 
+  const id = createNodeId(`${NodeType.Collection} ${name}`)
+
   const pageNodes = chunks
     .map<[ID, Node[]]>((chunk, index) => [
       createNodeId(`${NodeType.Page} ${name} ${index}`),
       chunk,
     ])
-    .map(([id, chunk], index, arr) =>
-      createPageNode(chunk, id, index, arr, gatsbyContext, pluginOptions),
+    .map(([pageId, chunk], index, arr) =>
+      createPageNode(chunk, pageId, index, arr, id, gatsbyContext),
     )
 
   const nodeCount = pageNodes.reduce(
@@ -119,7 +120,7 @@ export const createCollectionNode = (
   const pageNodeIds = pageNodes.map(pageNode => pageNode.id)
 
   const node: CollectionNodeInput = {
-    id: createNodeId(`${NodeType.Collection} ${name}`),
+    id,
     name,
     pageSize,
     firstPageSize: pageNodes[0].nodes.length,

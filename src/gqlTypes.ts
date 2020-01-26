@@ -34,8 +34,8 @@ export const types = gql`
     "Index of the page within the collection."
     index: Int!
 
-    "Name of the collection to which this page belongs."
-    collectionName: String!
+    "The collection to which this page belongs."
+    collection: PaginatedCollection! @link
 
     "The next page."
     nextPage: PaginatedCollectionPage @link
