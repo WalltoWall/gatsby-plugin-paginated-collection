@@ -182,6 +182,7 @@ specific collection page for that page.
 {
   paginatedCollectionPage {
     collectionName
+    index
     nextPage {
       index
     }
