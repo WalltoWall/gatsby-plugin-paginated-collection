@@ -20,6 +20,7 @@ using the plugin twice.
 - [Install](#install)
 - [How to use](#how-to-use)
 - [How to query](#how-to-query)
+  - [Query Collections](#query-collections)
   - [Query Pages](#query-pages)
 
 ## Features
@@ -107,7 +108,7 @@ plugins: [
 
 You can query your collections using GraphQL like the following:
 
-**Note**: Learn to use the GraphQL tool and Ctrl+Spacebar at
+**Note**: Learn to use the GraphiQL tool and Ctrl+Spacebar at
 <http://localhost:8000/___graphql> to discover the types and properties of your
 GraphQL model.
 
@@ -136,16 +137,61 @@ query a specific collection.
 }
 ```
 
-### Query Pages
+### Query Collections
 
-TODO
+Collections contain pages of nodes along with information about the pages.
+
+Descriptions for each field are viewable in GraphiQL.
+
+Querying a collection is most useful when needing to create pages or files for
+each page in the collection. In your site's `gatsby-node.js`, for example, you
+could create a page for each page in the collection, passing the page ID as
+context to the page's template.
 
 ```graphql
 {
   paginatedCollection {
+    name
+    pageSize
+    firstPageSize
+    lastPageSize
+    nodeCount
+    pageCount
     pages {
       id
     }
+  }
+}
+```
+
+### Query Pages
+
+Pages contain grouped nodes along with information about the page and adjacent
+pages.
+
+Descriptions for each field are viewable in GraphiQL.
+
+Note that `nodes` is a JSON field that automatically returns all data for each
+node without needing to query fields individually.
+
+Querying for a page is most useful when needing to display the nodes in the
+page. In your page's GraphQL query, for example, you could query for the
+specific collection page for that page.
+
+```graphql
+{
+  paginatedCollectionPage {
+    collectionName
+    nextPage {
+      index
+    }
+    hasNextPage
+    previousPage {
+      index
+    }
+    hasPreviousPage
+    nodeCount
+    nodes
   }
 }
 ```
