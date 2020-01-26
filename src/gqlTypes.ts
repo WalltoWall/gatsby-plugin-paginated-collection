@@ -31,6 +31,9 @@ export const types = gql`
   A page in a paginated collection.
   """
   type PaginatedCollectionPage implements Node @dontInfer {
+    "Index of the page within the collection."
+    index: Int!
+
     "Name of the collection to which this page belongs."
     collectionName: String!
 
