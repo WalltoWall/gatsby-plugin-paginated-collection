@@ -159,7 +159,7 @@ exports[`sourceNodes creates nodes 1`] = `
           "type": "PaginatedCollectionPage",
         },
         "nextPage": undefined,
-        "nodeCount": 10,
+        "nodeCount": 5,
         "nodes": Array [
           Object {
             "foo": 30,
@@ -176,21 +176,6 @@ exports[`sourceNodes creates nodes 1`] = `
           Object {
             "foo": 34,
           },
-          Object {
-            "foo": 35,
-          },
-          Object {
-            "foo": 36,
-          },
-          Object {
-            "foo": 37,
-          },
-          Object {
-            "foo": 38,
-          },
-          Object {
-            "foo": 39,
-          },
         ],
         "previousPage": "createNodeId",
       },
@@ -203,9 +188,9 @@ exports[`sourceNodes creates nodes 1`] = `
           "contentDigest": "createContentDigest",
           "type": "PaginatedCollection",
         },
-        "lastPageSize": 10,
+        "lastPageSize": 5,
         "name": "name",
-        "nodeCount": 40,
+        "nodeCount": 35,
         "pageCount": 4,
         "pageSize": 10,
         "pages": Array [
