@@ -25,7 +25,7 @@
     "proseWrap": "always",
     "printWidth": 80
   },
-  "name": "@walltowall/gatsby-plugin-paginated-collection",
+  "name": "gatsby-plugin-paginated-collection",
   "author": "Angelo Ashmore <angelo.ashmore@walltowall.com>",
   "module": "dist/gatsby-plugin-paginated-collection.esm.js",
   "devDependencies": {
