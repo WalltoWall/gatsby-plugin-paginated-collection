@@ -2,32 +2,6 @@ const gql = (query: TemplateStringsArray) => String(query).replace(`\n`, ` `)
 
 export const types = gql`
   """
-  A page in a paginated collection.
-  """
-  type PaginatedCollectionPage implements Node @dontInfer {
-    "Name of the collection to which this page belongs."
-    collectionName: String!
-
-    "The next page."
-    nextPage: ID @link
-
-    "Whether or not a page exists after this page."
-    hasNextPage: Boolean!
-
-    "The previous page."
-    previousPage: ID @link
-
-    "Whether or not a page exists before this page."
-    hasPreviousPage: Boolean!
-
-    "Number of nodes in this page."
-    nodeCount: Int!
-
-    "Nodes in this page."
-    nodes: [JSON!]!
-  }
-
-  """
   A paginated collection of nodes.
   """
   type PaginatedCollection implements Node @dontInfer {
@@ -51,5 +25,31 @@ export const types = gql`
 
     "Pages in the collection."
     pages: [ID!]! @link
+  }
+
+  """
+  A page in a paginated collection.
+  """
+  type PaginatedCollectionPage implements Node @dontInfer {
+    "Name of the collection to which this page belongs."
+    collectionName: String!
+
+    "The next page."
+    nextPage: ID @link
+
+    "Whether or not a page exists after this page."
+    hasNextPage: Boolean!
+
+    "The previous page."
+    previousPage: ID @link
+
+    "Whether or not a page exists before this page."
+    hasPreviousPage: Boolean!
+
+    "Number of nodes in this page."
+    nodeCount: Int!
+
+    "Nodes in this page."
+    nodes: [JSON!]!
   }
 `
