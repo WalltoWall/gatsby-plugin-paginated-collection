@@ -1,6 +1,6 @@
-import { CreatePagesArgs } from 'gatsby'
+import { CreatePagesArgs, CreateSchemaCustomizationArgs } from 'gatsby'
 
-import { createPages } from '../src/gatsby-node'
+import { createPages, createSchemaCustomization } from '../src/gatsby-node'
 import { ProvidedPluginOptions } from '../src/types'
 
 const mockActions = {
@@ -137,9 +137,9 @@ beforeAll(() => {
   )
 })
 
-describe('sourceNodes', () => {
-  beforeEach(() => jest.clearAllMocks())
+beforeEach(() => jest.clearAllMocks())
 
+describe('sourceNodes', () => {
   test('creates nodes', async () => {
     await new Promise(res =>
       createPages!(mockGatsbyContext, pluginOptions, res),
@@ -147,10 +147,13 @@ describe('sourceNodes', () => {
 
     expect(mockGatsbyContext.actions.createNode).toMatchSnapshot()
   })
+})
 
+describe('createSchemaCustomization', () => {
   test('creates types', async () => {
-    await new Promise(res =>
-      createPages!(mockGatsbyContext, pluginOptions, res),
+    await createSchemaCustomization!(
+      mockGatsbyContext as CreateSchemaCustomizationArgs,
+      pluginOptions,
     )
 
     expect(mockGatsbyContext.actions.createTypes).toMatchSnapshot()

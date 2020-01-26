@@ -1,4 +1,8 @@
-import { GatsbyNode } from 'gatsby'
+import {
+  GatsbyNode,
+  CreateSchemaCustomizationArgs,
+  PluginOptions as GatsbyPluginOptions,
+} from 'gatsby'
 
 import { chunk, fmtMsg, createCollectionNode } from './utils'
 import { ProvidedPluginOptions, PluginOptions } from './types'
@@ -22,11 +26,8 @@ export const createPages: GatsbyNode['createPages'] = (
       DEFAULT_PLUGIN_OPTIONS.pageSize,
   }
 
-  const { actions, graphql, reporter } = gatsbyContext
-  const { createTypes } = actions
+  const { graphql, reporter } = gatsbyContext
   const { name, query, pageSize, normalizer } = pluginOptions
-
-  createTypes(types)
 
   const asyncFn = async () => {
     const queryResult = await graphql(query)
@@ -64,4 +65,14 @@ export const createPages: GatsbyNode['createPages'] = (
   }
 
   asyncFn().finally(() => callback && callback(null))
+}
+
+export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] = async (
+  gatsbyContext: CreateSchemaCustomizationArgs,
+  _pluginOptions: GatsbyPluginOptions,
+) => {
+  const { actions } = gatsbyContext
+  const { createTypes } = actions
+
+  createTypes(types)
 }

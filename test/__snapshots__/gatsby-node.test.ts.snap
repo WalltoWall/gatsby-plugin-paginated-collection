@@ -1,5 +1,75 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`createSchemaCustomization creates types 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "   \\"\\"\\"
+  A paginated collection of nodes.
+  \\"\\"\\"
+  type PaginatedCollection implements Node @dontInfer {
+    \\"Name of the collection.\\"
+    name: String!
+
+    \\"Maximum number of nodes in each page.\\"
+    pageSize: Int!
+
+    \\"Number of nodes in the first page.\\"
+    firstPageSize: Int!
+
+    \\"Number of nodes in the last page.\\"
+    lastPageSize: Int!
+
+    \\"Number of nodes in the collection.\\"
+    nodeCount: Int!
+
+    \\"Number of pages in the collection.\\"
+    pageCount: Int!
+
+    \\"Pages in the collection.\\"
+    pages: [ID!]! @link
+  }
+
+  \\"\\"\\"
+  A page in a paginated collection.
+  \\"\\"\\"
+  type PaginatedCollectionPage implements Node @dontInfer {
+    \\"Index of the page within the collection.\\"
+    index: Int!
+
+    \\"Name of the collection to which this page belongs.\\"
+    collectionName: String!
+
+    \\"The next page.\\"
+    nextPage: ID @link
+
+    \\"Whether or not a page exists after this page.\\"
+    hasNextPage: Boolean!
+
+    \\"The previous page.\\"
+    previousPage: ID @link
+
+    \\"Whether or not a page exists before this page.\\"
+    hasPreviousPage: Boolean!
+
+    \\"Number of nodes in this page.\\"
+    nodeCount: Int!
+
+    \\"Nodes in this page.\\"
+    nodes: [JSON!]!
+  }
+",
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
 exports[`sourceNodes creates nodes 1`] = `
 [MockFunction] {
   "calls": Array [
@@ -219,73 +289,6 @@ exports[`sourceNodes creates nodes 1`] = `
       "type": "return",
       "value": undefined,
     },
-    Object {
-      "type": "return",
-      "value": undefined,
-    },
-  ],
-}
-`;
-
-exports[`sourceNodes creates types 1`] = `
-[MockFunction] {
-  "calls": Array [
-    Array [
-      "   \\"\\"\\"
-  A page in a paginated collection.
-  \\"\\"\\"
-  type PaginatedCollectionPage implements Node @dontInfer {
-    \\"Name of the collection to which this page belongs.\\"
-    collectionName: String!
-
-    \\"The next page.\\"
-    nextPage: ID @link
-
-    \\"Whether or not a page exists after this page.\\"
-    hasNextPage: Boolean!
-
-    \\"The previous page.\\"
-    previousPage: ID @link
-
-    \\"Whether or not a page exists before this page.\\"
-    hasPreviousPage: Boolean!
-
-    \\"Number of nodes in this page.\\"
-    nodeCount: Int!
-
-    \\"Nodes in this page.\\"
-    nodes: [JSON!]!
-  }
-
-  \\"\\"\\"
-  A paginated collection of nodes.
-  \\"\\"\\"
-  type PaginatedCollection implements Node @dontInfer {
-    \\"Name of the collection.\\"
-    name: String!
-
-    \\"Maximum number of nodes in each page.\\"
-    pageSize: Int!
-
-    \\"Number of nodes in the first page.\\"
-    firstPageSize: Int!
-
-    \\"Number of nodes in the last page.\\"
-    lastPageSize: Int!
-
-    \\"Number of nodes in the collection.\\"
-    nodeCount: Int!
-
-    \\"Number of pages in the collection.\\"
-    pageCount: Int!
-
-    \\"Pages in the collection.\\"
-    pages: [ID!]! @link
-  }
-",
-    ],
-  ],
-  "results": Array [
     Object {
       "type": "return",
       "value": undefined,
