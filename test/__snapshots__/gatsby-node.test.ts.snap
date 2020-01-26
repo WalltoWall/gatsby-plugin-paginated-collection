@@ -9,6 +9,7 @@ exports[`sourceNodes creates nodes 1`] = `
         "hasNextPage": true,
         "hasPreviousPage": false,
         "id": "createNodeId",
+        "index": 0,
         "internal": Object {
           "contentDigest": "createContentDigest",
           "type": "PaginatedCollectionPage",
@@ -57,6 +58,7 @@ exports[`sourceNodes creates nodes 1`] = `
         "hasNextPage": true,
         "hasPreviousPage": true,
         "id": "createNodeId",
+        "index": 1,
         "internal": Object {
           "contentDigest": "createContentDigest",
           "type": "PaginatedCollectionPage",
@@ -105,6 +107,7 @@ exports[`sourceNodes creates nodes 1`] = `
         "hasNextPage": true,
         "hasPreviousPage": true,
         "id": "createNodeId",
+        "index": 2,
         "internal": Object {
           "contentDigest": "createContentDigest",
           "type": "PaginatedCollectionPage",
@@ -153,6 +156,7 @@ exports[`sourceNodes creates nodes 1`] = `
         "hasNextPage": false,
         "hasPreviousPage": true,
         "id": "createNodeId",
+        "index": 3,
         "internal": Object {
           "contentDigest": "createContentDigest",
           "type": "PaginatedCollectionPage",

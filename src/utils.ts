@@ -66,6 +66,7 @@ const createPageNode = (
   const node: PageNodeInput = {
     id,
     collectionName: name,
+    index,
     page: id,
     nextPage: nextChunkTuple?.[0],
     hasNextPage: Boolean(nextChunkTuple),

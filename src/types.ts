@@ -9,6 +9,7 @@ export enum NodeType {
 
 export interface PageNodeInput extends NodeInput {
   collectionName: string
+  index: number
   page: ID
   nextPage: ID
   hasNextPage: boolean
