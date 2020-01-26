@@ -24,7 +24,7 @@ export const types = gql`
     pageCount: Int!
 
     "Pages in the collection."
-    pages: [ID!]! @link
+    pages: [PaginatedCollectionPage!]! @link
   }
 
   """
@@ -38,13 +38,13 @@ export const types = gql`
     collectionName: String!
 
     "The next page."
-    nextPage: ID @link
+    nextPage: PaginatedCollectionPage @link
 
     "Whether or not a page exists after this page."
     hasNextPage: Boolean!
 
     "The previous page."
-    previousPage: ID @link
+    previousPage: PaginatedCollectionPage @link
 
     "Whether or not a page exists before this page."
     hasPreviousPage: Boolean!

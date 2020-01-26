@@ -27,7 +27,7 @@ exports[`createSchemaCustomization creates types 1`] = `
     pageCount: Int!
 
     \\"Pages in the collection.\\"
-    pages: [ID!]! @link
+    pages: [PaginatedCollectionPage!]! @link
   }
 
   \\"\\"\\"
@@ -41,13 +41,13 @@ exports[`createSchemaCustomization creates types 1`] = `
     collectionName: String!
 
     \\"The next page.\\"
-    nextPage: ID @link
+    nextPage: PaginatedCollectionPage @link
 
     \\"Whether or not a page exists after this page.\\"
     hasNextPage: Boolean!
 
     \\"The previous page.\\"
-    previousPage: ID @link
+    previousPage: PaginatedCollectionPage @link
 
     \\"Whether or not a page exists before this page.\\"
     hasPreviousPage: Boolean!
