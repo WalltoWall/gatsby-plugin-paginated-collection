@@ -146,7 +146,7 @@ describe('sourceNodes', () => {
     expect(mockGatsbyContext.actions.createNode).toMatchSnapshot()
   })
 
-  test.skip('creates types', async () => {
+  test('creates types', async () => {
     await new Promise(res =>
       createPages!(mockGatsbyContext, pluginOptions, res),
     )

@@ -241,3 +241,39 @@ exports[`sourceNodes creates nodes 1`] = `
   ],
 }
 `;
+
+exports[`sourceNodes creates types 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "   type PaginatedCollectionPage implements Node @dontInfer {
+    collectionName: String!
+    page: ID!
+    nextPage: ID! @link
+    hasNextPage: Boolean!
+    previousPage: ID! @link
+    hasPreviousPage: Boolean!
+    nodeCount: Int!
+    nodes: [JSON!]!
+  }
+
+  type PaginatedCollection implements Node @dontInfer {
+    name: String!
+    totalPages: Int!
+    pageSize: Int!
+    firstPageSize: Int!
+    lastPageSize: Int!
+    totalNodeCount: Int!
+    pages: [ID!]! @link
+  }
+",
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;

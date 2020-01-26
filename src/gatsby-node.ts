@@ -2,6 +2,7 @@ import { GatsbyNode } from 'gatsby'
 
 import { chunk, fmtMsg, createCollectionNode } from './utils'
 import { ProvidedPluginOptions, PluginOptions } from './types'
+import { types } from './gqlTypes'
 
 const DEFAULT_PLUGIN_OPTIONS = {
   pageSize: 10,
@@ -21,8 +22,11 @@ export const createPages: GatsbyNode['createPages'] = (
       DEFAULT_PLUGIN_OPTIONS.pageSize,
   }
 
-  const { graphql, reporter } = gatsbyContext
+  const { actions, graphql, reporter } = gatsbyContext
+  const { createTypes } = actions
   const { name, query, pageSize, normalizer } = pluginOptions
+
+  createTypes(types)
 
   const asyncFn = async () => {
     const queryResult = await graphql(query)
