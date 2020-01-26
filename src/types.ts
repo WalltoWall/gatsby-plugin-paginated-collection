@@ -10,10 +10,9 @@ export enum NodeType {
 export interface PageNodeInput extends NodeInput {
   collectionName: string
   index: number
-  page: ID
-  nextPage: ID
+  nextPage: ID | undefined
   hasNextPage: boolean
-  previousPage: ID
+  previousPage: ID | undefined
   hasPreviousPage: boolean
   nodeCount: number
   nodes: Node[]
@@ -24,11 +23,11 @@ export interface PageNodeInput extends NodeInput {
 
 export interface CollectionNodeInput extends NodeInput {
   name: string
-  totalPages: number
   pageSize: number
   firstPageSize: number
   lastPageSize: number
-  totalNodeCount: number
+  nodeCount: number
+  pageCount: number
   pages: ID[]
   internal: NodeInput['internal'] & {
     type: NodeType.Collection

@@ -67,7 +67,6 @@ const createPageNode = (
     id,
     collectionName: name,
     index,
-    page: id,
     nextPage: nextChunkTuple?.[0],
     hasNextPage: Boolean(nextChunkTuple),
     previousPage: previousChunkTuple?.[0],
@@ -112,7 +111,7 @@ export const createCollectionNode = (
       createPageNode(chunk, id, index, arr, gatsbyContext, pluginOptions),
     )
 
-  const totalNodeCount = pageNodes.reduce(
+  const nodeCount = pageNodes.reduce(
     (count, pageNode) => (count += pageNode.nodes.length),
     0,
   )
@@ -122,11 +121,11 @@ export const createCollectionNode = (
   const node: CollectionNodeInput = {
     id: createNodeId(`${NodeType.Collection} ${name}`),
     name,
-    totalPages: pageNodes.length,
     pageSize,
     firstPageSize: pageNodes[0].nodes.length,
     lastPageSize: pageNodes[pageNodes.length - 1].nodes.length,
-    totalNodeCount,
+    nodeCount,
+    pageCount: pageNodes.length,
     pages: pageNodeIds,
     internal: {
       type: NodeType.Collection,

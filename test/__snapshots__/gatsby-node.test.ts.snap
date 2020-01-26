@@ -48,7 +48,6 @@ exports[`sourceNodes creates nodes 1`] = `
             "foo": 9,
           },
         ],
-        "page": "createNodeId",
         "previousPage": undefined,
       },
     ],
@@ -97,7 +96,6 @@ exports[`sourceNodes creates nodes 1`] = `
             "foo": 19,
           },
         ],
-        "page": "createNodeId",
         "previousPage": "createNodeId",
       },
     ],
@@ -146,7 +144,6 @@ exports[`sourceNodes creates nodes 1`] = `
             "foo": 29,
           },
         ],
-        "page": "createNodeId",
         "previousPage": "createNodeId",
       },
     ],
@@ -195,7 +192,6 @@ exports[`sourceNodes creates nodes 1`] = `
             "foo": 39,
           },
         ],
-        "page": "createNodeId",
         "previousPage": "createNodeId",
       },
     ],
@@ -209,6 +205,8 @@ exports[`sourceNodes creates nodes 1`] = `
         },
         "lastPageSize": 10,
         "name": "name",
+        "nodeCount": 40,
+        "pageCount": 4,
         "pageSize": 10,
         "pages": Array [
           "createNodeId",
@@ -216,8 +214,6 @@ exports[`sourceNodes creates nodes 1`] = `
           "createNodeId",
           "createNodeId",
         ],
-        "totalNodeCount": 40,
-        "totalPages": 4,
       },
     ],
   ],
@@ -250,24 +246,55 @@ exports[`sourceNodes creates types 1`] = `
 [MockFunction] {
   "calls": Array [
     Array [
-      "   type PaginatedCollectionPage implements Node @dontInfer {
+      "   \\"\\"\\"
+  A page in a paginated collection.
+  \\"\\"\\"
+  type PaginatedCollectionPage implements Node @dontInfer {
+    \\"Name of the collection to which this page belongs.\\"
     collectionName: String!
-    page: ID!
-    nextPage: ID! @link
+
+    \\"The next page.\\"
+    nextPage: ID @link
+
+    \\"Whether or not a page exists after this page.\\"
     hasNextPage: Boolean!
-    previousPage: ID! @link
+
+    \\"The previous page.\\"
+    previousPage: ID @link
+
+    \\"Whether or not a page exists before this page.\\"
     hasPreviousPage: Boolean!
+
+    \\"Number of nodes in this page.\\"
     nodeCount: Int!
+
+    \\"Nodes in this page.\\"
     nodes: [JSON!]!
   }
 
+  \\"\\"\\"
+  A paginated collection of nodes.
+  \\"\\"\\"
   type PaginatedCollection implements Node @dontInfer {
+    \\"Name of the collection.\\"
     name: String!
-    totalPages: Int!
+
+    \\"Maximum number of nodes in each page.\\"
     pageSize: Int!
+
+    \\"Number of nodes in the first page.\\"
     firstPageSize: Int!
+
+    \\"Number of nodes in the last page.\\"
     lastPageSize: Int!
-    totalNodeCount: Int!
+
+    \\"Number of nodes in the collection.\\"
+    nodeCount: Int!
+
+    \\"Number of pages in the collection.\\"
+    pageCount: Int!
+
+    \\"Pages in the collection.\\"
     pages: [ID!]! @link
   }
 ",
