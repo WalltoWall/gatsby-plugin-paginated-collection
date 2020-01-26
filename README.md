@@ -1,9 +1,9 @@
 # gatsby-plugin-paginated-collection
 
-Gatsby plugin which paginates a collection of data from your sources. This
-plugin tries to be unopinionated in the the data is used.
+Gatsby plugin which paginates a collection of data from your sources.
 
-For example, you could use the pagination information to:
+This plugin tries to be unopinionated in how you use the paginated data. For
+example, you could use the pagination information to:
 
 - Create a page within your site for each page of data.
 - Create true client-side "Load More" by saving JSON files for each page of
