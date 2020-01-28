@@ -201,10 +201,154 @@ specific collection page for that page.
 ## Examples
 
 <details>
-  <summary><strong>Example 1</strong>: Paginated archive of blog posts</summary>
+  <summary><strong>Example 1</strong>: Paginated list of blog posts</summary>
   <br/>
 
-TODO
+This example creates pages of blog posts with each page containing a list of up
+to 10 posts. We will use a template to generate these pages using page context
+to pass the pagination information.
+
+1. **Add the plugin to `gatsby-config.js`**
+
+   This example assumes you are creating pages for each blog post at
+   `/blog/${slug}`.
+
+   ```javascript
+   // gatsby-config.js
+
+   module.exports = {
+     plugins: [
+       {
+         resolve: 'gatsby-plugin-paginated-collection',
+         options: {
+           name: 'blog-posts',
+           query: `
+             {
+               allMarkdownRemark {
+                 nodes {
+                   id
+                   frontmatter {
+                     path
+                     title
+                     excerpt
+                   }
+                 }
+               }
+             }
+           `,
+           normalizer: ({ data }) =>
+             data.allMarkdownRemark.nodes.map(node => ({
+               id: node.id,
+               url: `/blog/${node.frontmatter.path}`,
+               title: node.frontmatter.title,
+             })),
+         },
+       },
+     ],
+   }
+   ```
+
+1. **Create a blog posts template**
+
+   This template will be used for each page of blog posts.
+
+   ```javascript
+   // src/templates/blog.js
+
+   import React from 'react'
+   import { Link, graphql } from 'gatsby'
+
+   const BlogPage = ({ data }) => {
+     const page = data.paginatedCollectionPage
+     const blogPosts = page.nodes
+
+     return (
+       <div className="blog-posts">
+         <ul className="blog-posts__list">
+           {blogPosts.map(blogPost => (
+             <li key={blogPost.id} className="blog-posts__post">
+               <Link to={blogPost.url}>{blogPost.title}</Link>
+             </li>
+           ))}
+         </ul>
+         {page.hasPreviousPage && (
+           <Link to={`/blog/${page.previousPage.id}`}>Previous page</Link>
+         )}
+         <span>
+           Page {page.index + 1} of {page.collection.totalPages}
+         </span>
+         {page.hasNextPage && (
+           <Link to={`/blog/${page.nextPage.id}`}>Next page</Link>
+         )}
+       </div>
+     )
+   }
+
+   export default BlogPage
+
+   export const query = graphql`
+     query($id: String!) {
+       paginatedCollectionPage(id: { eq: $id }) {
+         nodes
+         index
+         hasNextPage
+         nextPage {
+           id
+         }
+         hasPreviousPage
+         previousPage {
+           id
+         }
+         collection {
+           totalPages
+         }
+       }
+     }
+   `
+   ```
+
+1. **Create a page for each paginated group of blog posts**
+
+   We query all the pages in the collection and create pages using the template
+   above. We also create an extra page for the first group of blog posts with a
+   nice URL.
+
+   ```javascript
+   // gatsby-node.js
+
+   exports.createPages = async gatsbyContext => {
+     const { actions, graphql } = gatsbyContext
+     const { createPage } = actions
+
+     const blogTemplate = path.resolve('src/templates/blog.js')
+
+     const { data } = await graphql(`
+       {
+         paginatedCollection(name: { eq: "blog-posts" }) {
+           pages {
+             id
+             index
+           }
+         }
+       }
+     `)
+     const pages = data.paginatedCollection.pages
+
+     for (const page of pages)
+       createPage({
+         path: `/blog/${page.id}`,
+         component: blogTemplate,
+         context: { id: page.id },
+       })
+
+     // Create the first page with a nice URL
+     createPage({
+       path: '/blog/',
+       component: blogTemplate,
+       context: { id: pages[0] },
+     })
+   }
+   ```
 
 </details>
 
@@ -280,7 +424,7 @@ more pages to fetch or if we are on the last page.
    ```javascript
    // gatsby-node.js
 
-   export const createPages = async gatsbyContext => {
+   exports.createPages = async gatsbyContext => {
      const { graphql } = gatsbyContext
 
      const queryResult = await graphql(`
@@ -347,35 +491,39 @@ more pages to fetch or if we are on the last page.
      }, [latestPage])
 
      return (
-       <ul className="blog-posts">
-         {blogPosts.map(blogPost => (
-           <li key={blogPost.id} className="blog-posts__post">
-             <Link to={blogPost.url}>{blogPost.title}</Link>
-           </li>
-         ))}
+       <div className="blog-posts">
+         <ul className="blog-posts__list">
+           {blogPosts.map(blogPost => (
+             <li key={blogPost.id} className="blog-posts__list__post">
+               <Link to={blogPost.url}>{blogPost.title}</Link>
+             </li>
+           ))}
+         </ul>
          {latestPage.hasNextPage && (
            <button class="blog-posts__load-more" onClick={loadNextPage}>
              Load more
            </button>
          )}
-       </ul>
+       </div>
      )
    }
 
    export default BlogPage
 
    export const query = graphql`
-     paginatedCollectionPage(
-       collection: { name: { eq: "blog-posts" } }
-       index: { eq: 0 }
-     ) {
-       nodes
-       hasNextPage
-       nextPage {
-         id
-       }
-       collection {
-         id
+     {
+       paginatedCollectionPage(
+         collection: { name: { eq: "blog-posts" } }
+         index: { eq: 0 }
+       ) {
+         nodes
+         hasNextPage
+         nextPage {
+           id
+         }
+         collection {
+           id
+         }
        }
      }
    `
