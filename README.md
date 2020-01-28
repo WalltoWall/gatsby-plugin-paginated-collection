@@ -200,10 +200,15 @@ specific collection page for that page.
 
 ## Examples
 
-### A paginated archive of blog posts
+<details>
+  <summary><strong>Example 1</strong>: Paginated archive of blog posts</summary>
+
+TODO
+
+</details>
 
 <details>
-  <summary>Load more blog posts</summary>
+  <summary><strong>Example 2</strong>: Load more blog posts</summary>
 
 This example creates JSON files in the site's `public/paginated-data` directory
 containing the pagination data. Files in this directory are added to the site
@@ -352,4 +357,9 @@ export const query = graphql`
 
 </details>
 
-### Next/previous buttons on a blog post
+<details>
+  <summary><strong>Example 3</strong>: Next/previous buttons on a blog post</summary>
+
+TODO
+
+</details>
