@@ -327,7 +327,6 @@ to pass the pagination information.
          paginatedCollection(name: { eq: "blog-posts" }) {
            pages {
              id
-             index
            }
          }
        }
