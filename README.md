@@ -231,6 +231,8 @@ more pages to fetch or if we are on the last page.
    `/blog/${slug}`.
 
    ```javascript
+   // gatsby-config.js
+
    module.exports = {
      plugins: [
        {
