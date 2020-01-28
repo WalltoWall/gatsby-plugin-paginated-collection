@@ -205,8 +205,8 @@ specific collection page for that page.
 ### Load more blog posts
 
 This example creates JSON files in the site's `public/paginated-data` directory
-containing the pagination data. Files in this directory are served at the root
-level of the site, allowing us to fetch the JSON at run time.
+containing the pagination data. Files in this directory are added to the site
+as-is, allowing us to fetch the JSON at run time.
 
 On the page where we display the blog posts, we query the first page of posts as
 part of the page's static query. These posts will be included in the static
@@ -216,6 +216,41 @@ The "Load More" button has a click handler that fetches the next page's JSON,
 appends the posts from that page to some state, and updates the state holding
 the latest page. Since we have the latest page in state, we can see if there are
 more pages to fetch or if we are on the last page.
+
+**Add the plugin to `gatsby-config.js`**
+
+```javascript
+module.exports = {
+  plugins: [
+    {
+      resolve: 'gatsby-plugin-paginated-collection',
+      options: {
+        name: 'blog-posts',
+        query: `
+          {
+            allMarkdownRemark {
+              nodes {
+                id
+                frontmatter {
+                  path
+                  title
+                  excerpt
+                }
+              }
+            }
+          }
+        `,
+        normalizer: ({ data }) =>
+          data.allMarkdownRemark.nodes.map(node => ({
+            id: node.id,
+            url: `/blog/${node.frontmatter.path}`,
+            title: node.frontmatter.title,
+          })),
+      },
+    },
+  ],
+}
+```
 
 **Create the JSON files in `gatsby-node.js`**
 
