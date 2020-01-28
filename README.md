@@ -202,7 +202,8 @@ specific collection page for that page.
 
 ### A paginated archive of blog posts
 
-### Load more blog posts
+<details>
+  <summary>Load more blog posts</summary>
 
 This example creates JSON files in the site's `public/paginated-data` directory
 containing the pagination data. Files in this directory are added to the site
@@ -348,5 +349,7 @@ export const query = graphql`
   }
 `
 ```
+
+</details>
 
 ### Next/previous buttons on a blog post
