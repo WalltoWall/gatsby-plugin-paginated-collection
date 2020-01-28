@@ -22,6 +22,7 @@ using the plugin twice.
 - [How to query](#how-to-query)
   - [Query Collections](#query-collections)
   - [Query Pages](#query-pages)
+- [Examples](#examples)
 
 ## Features
 
@@ -196,3 +197,121 @@ specific collection page for that page.
   }
 }
 ```
+
+## Examples
+
+### A paginated archive of blog posts
+
+### Load more blog posts
+
+This example creates JSON files in the site's `public/paginated-data` directory
+containing the pagination data. Files in this directory are served at the root
+level of the site, allowing us to fetch the JSON at run time.
+
+On the page where we display the blog posts, we query the first page of posts as
+part of the page's static query. These posts will be included in the static
+build of the site.
+
+The "Load More" button has a click handler that fetches the next page's JSON,
+appends the posts from that page to some state, and updates the state holding
+the latest page. Since we have the latest page in state, we can see if there are
+more pages to fetch or if we are on the last page.
+
+**Create the JSON files in `gatsby-node.js`**
+
+```javascript
+// gatsby-node.js
+
+export const createPages = async gatsbyContext => {
+  const { graphql } = gatsbyContext
+
+  const queryResult = await graphql(`
+    {
+      paginatedCollection(name: { eq: "blog-posts" }) {
+        id
+        pages {
+          id
+          nodes
+          hasNextPage
+          nextPage {
+            id
+          }
+        }
+      }
+    }
+  `)
+
+  const collection = queryResult.data.paginatedCollection
+  const dir = path.join(__dirname, 'public', 'paginated-data', collection.id)
+  fs.mkdirSync(dir, { recursive: true })
+
+  for (const page of collection.pages)
+    fs.writeFileSync(path.resolve(dir, `${page.id}.json`), JSON.stringify(page))
+}
+```
+
+**Create a Blog page with the fetching handler**
+
+```javascript
+// src/pages/blog.js
+
+import React, { useState, useCallback } from 'react'
+import { Link, graphql } from 'gatsby'
+
+const BlogPage = ({ data }) => {
+  const initialPage = data.paginatedCollectionPage
+  const [latestPage, setLatestPage] = useState(initialPage)
+  const [blogPosts, setBlogPosts] = useState(initialPage.nodes)
+
+  const loadNextPage = useCallback(async () => {
+    if (!latestPage.hasNextPage) return
+
+    const collectionId = latestPage.collection.id
+    const nextPageId = latestPage.nextPage.id
+    const path = withPrefix(
+      `/paginated-data/${collectionId}/${nextPageId}.json`,
+    )
+
+    const res = await fetch(path)
+    const json = await res.json()
+
+    setBlogPosts(state => [...state, ...json.nodes])
+    setLatestPage(json)
+  }, [latestPage])
+
+  return (
+    <ul className="blog-posts">
+      {blogPosts.map(blogPost => (
+        <li key={blogPost.id} className="blog-posts__post">
+          <Link to={blogPost.url}>{blogPost.title}</Link>
+        </li>
+      ))}
+      {latestPage.hasNextPage && (
+        <button class="blog-posts__load-more" onClick={loadNextPage}>
+          Load more
+        </button>
+      )}
+    </ul>
+  )
+}
+
+export default BlogPage
+
+export const query = graphql`
+  paginatedCollectionPage(
+    collection: { name: { eq: "blog-posts" } }
+    index: { eq: 0 }
+  ) {
+    nodes
+    hasNextPage
+    nextPage {
+      id
+    }
+    collection {
+      id
+    }
+  }
+`
+```
+
+### Next/previous buttons on a blog post
