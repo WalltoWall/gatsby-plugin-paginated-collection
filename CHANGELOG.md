@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/angeloashmore/gatsby-plugin-paginated-collection/compare/v0.1.2...v0.1.3) (2020-02-02)
+
+
+### Bug Fixes
+
+* replace package.json#files with .npmignore ([3e05c9a](https://github.com/angeloashmore/gatsby-plugin-paginated-collection/commit/3e05c9abf9315742b9c0cce058ad13230f78239b))
+
 ### [0.1.2](https://github.com/angeloashmore/gatsby-plugin-paginated-collection/compare/v0.1.1...v0.1.2) (2020-02-02)
 
 
