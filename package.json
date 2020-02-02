@@ -30,7 +30,7 @@
   "module": "dist/gatsby-plugin-paginated-collection.esm.js",
   "devDependencies": {
     "@types/jest": "^25.1.1",
-    "gatsby": "^2.18.25",
+    "gatsby": "^2.19.11",
     "husky": "^4.0.7",
     "prettier": "^1.19.1",
     "tsdx": "^0.12.3",
