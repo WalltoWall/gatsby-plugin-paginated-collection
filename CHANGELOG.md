@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.1](https://github.com/angeloashmore/gatsby-plugin-paginated-collection/compare/v0.1.0...v0.1.1) (2020-02-02)
+
+
+### Bug Fixes
+
+* add gatsby-node.js to files array ([459f4f3](https://github.com/angeloashmore/gatsby-plugin-paginated-collection/commit/459f4f38f55b28e460dae1e2db8079c7265c535a))
+
 ## 0.1.0 (2020-02-02)
 
 
