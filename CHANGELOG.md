@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/angeloashmore/gatsby-plugin-paginated-collection/compare/v0.1.3...v0.1.4) (2020-02-02)
+
+
+### Bug Fixes
+
+* restore files list and use correct prepare script ([ea0668f](https://github.com/angeloashmore/gatsby-plugin-paginated-collection/commit/ea0668f1abc6b60b3006db0150c3a8a14935ed98))
+
 ### [0.1.3](https://github.com/angeloashmore/gatsby-plugin-paginated-collection/compare/v0.1.2...v0.1.3) (2020-02-02)
 
 
