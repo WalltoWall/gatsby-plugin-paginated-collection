@@ -6,6 +6,11 @@
   "files": [
     "dist"
   ],
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "pagination"
+  ],
   "scripts": {
     "start": "tsdx watch -i ./src/gatsby-node.ts",
     "build": "tsdx build -i ./src/gatsby-node.ts",
