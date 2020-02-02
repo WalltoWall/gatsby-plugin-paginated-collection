@@ -11,12 +11,18 @@
     "build": "tsdx build -i ./src/gatsby-node.ts",
     "test": "tsdx test",
     "lint": "tsdx lint",
-    "prepare": "tsdx build"
+    "prepare": "tsdx build",
+    "release": "standard-version"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "tsdx lint"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   },
   "prettier": {
     "semi": false,
@@ -29,10 +35,13 @@
   "author": "Angelo Ashmore <angelo.ashmore@walltowall.com>",
   "module": "dist/gatsby-plugin-paginated-collection.esm.js",
   "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
     "@types/jest": "^25.1.1",
     "gatsby": "^2.19.11",
-    "husky": "^4.0.7",
+    "husky": "^4.2.1",
     "prettier": "^1.19.1",
+    "standard-version": "^7.1.0",
     "tsdx": "^0.12.3",
     "tslib": "^1.10.0",
     "typescript": "^3.7.4"
