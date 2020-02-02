@@ -3,6 +3,10 @@
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "gatsby-node.js"
+  ],
   "keywords": [
     "gatsby",
     "gatsby-plugin",
@@ -13,7 +17,7 @@
     "build": "tsdx build -i ./src/gatsby-node.ts",
     "test": "tsdx test",
     "lint": "tsdx lint",
-    "prepare": "tsdx build",
+    "prepare": "npm run build",
     "release": "standard-version"
   },
   "husky": {
