@@ -1,7 +1,12 @@
 import { CreatePagesArgs, CreateSchemaCustomizationArgs } from 'gatsby'
 
-import { createPages, createSchemaCustomization } from '../src/gatsby-node'
+import {
+  createPages,
+  createSchemaCustomization,
+  DEFAULT_PLUGIN_OPTIONS,
+} from '../src/gatsby-node'
 import { ProvidedPluginOptions } from '../src/types'
+import * as examplePlugin from './__mocks__/gatsby-paginated-collection-example-plugin'
 
 const mockActions = {
   deletePage: jest.fn(),
@@ -128,7 +133,7 @@ const pluginOptions: ProvidedPluginOptions = {
     (queryResult as typeof mockQueryResult).data.allNode.edges.map(node => ({
       foo: node.foo,
     })),
-  plugins: [],
+  plugins: [{ resolve: 'gatsby-paginated-collection-example-plugin' }],
 }
 
 beforeAll(() => {
@@ -146,6 +151,23 @@ describe('sourceNodes', () => {
     )
 
     expect(mockGatsbyContext.actions.createNode).toMatchSnapshot()
+  })
+
+  describe('plugins', () => {
+    test('calls onPostCreateNodes', async () => {
+      await new Promise(res =>
+        createPages!(mockGatsbyContext, pluginOptions, res),
+      )
+
+      expect(examplePlugin.onPostCreateNodes).toHaveBeenLastCalledWith(
+        mockGatsbyContext,
+        {
+          pageSize: DEFAULT_PLUGIN_OPTIONS.pageSize,
+          firstPageSize: DEFAULT_PLUGIN_OPTIONS.pageSize,
+          ...pluginOptions,
+        },
+      )
+    })
   })
 })
 

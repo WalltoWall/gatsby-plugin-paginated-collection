@@ -43,10 +43,16 @@ export type Node = Record<string, unknown>
 
 export type PluginOptions = Required<ProvidedPluginOptions>
 
+export interface Plugin {
+  resolve: string
+  options?: Record<string, unknown>
+}
+
 export interface ProvidedPluginOptions extends GatsbyPluginOptions {
   name: string
   query: string
   pageSize?: number
   firstPageSize?: number
   normalizer: (input: GraphQLResult) => Node[]
+  plugins: Plugin[]
 }
