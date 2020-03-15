@@ -39,14 +39,9 @@ export interface GraphQLResult {
   data?: unknown
 }
 
-export interface Node {
-  [key: string]: unknown
-}
+export type Node = Record<string, unknown>
 
-export interface PluginOptions extends ProvidedPluginOptions {
-  pageSize: number
-  firstPageSize: number
-}
+export type PluginOptions = Required<ProvidedPluginOptions>
 
 export interface ProvidedPluginOptions extends GatsbyPluginOptions {
   name: string
