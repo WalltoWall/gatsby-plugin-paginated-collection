@@ -43,13 +43,13 @@
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
-    "@types/jest": "^25.1.1",
-    "gatsby": "^2.19.11",
-    "husky": "^4.2.1",
+    "@types/jest": "^25.1.4",
+    "gatsby": "^2.19.43",
+    "husky": "^4.2.3",
     "prettier": "^1.19.1",
     "standard-version": "^7.1.0",
     "tsdx": "^0.12.3",
-    "tslib": "^1.10.0",
-    "typescript": "^3.7.4"
+    "tslib": "^1.11.1",
+    "typescript": "^3.8.3"
   }
 }
