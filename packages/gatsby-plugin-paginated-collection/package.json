@@ -1,0 +1,42 @@
+{
+  "name": "gatsby-plugin-paginated-collection",
+  "version": "0.1.4",
+  "description": "Gatsby plugin which paginates a collection of data from your sources",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/gatsby-plugin-paginated-collection.esm.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "gatsby-node.js"
+  ],
+  "scripts": {
+    "start": "tsdx watch -i ./src/gatsby-node.ts",
+    "build": "tsdx build -i ./src/gatsby-node.ts",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "prepare": "npm run build",
+    "release": "standard-version"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "pagination"
+  ],
+  "author": "Angelo Ashmore <angelo.ashmore@walltowall.com>",
+  "devDependencies": {
+    "tsdx": "^0.12.3",
+    "tslib": "^1.11.1",
+    "typescript": "^3.8.3"
+  },
+  "standard-version": {
+    "tagPrefix": "gatsby-plugin-paginated-collection@"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "proseWrap": "always",
+    "printWidth": 80
+  }
+}

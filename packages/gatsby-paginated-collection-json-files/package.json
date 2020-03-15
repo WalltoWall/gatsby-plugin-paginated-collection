@@ -1,0 +1,44 @@
+{
+  "name": "gatsby-paginated-collection-json-files",
+  "version": "0.1.0",
+  "description": "Plugin for gatsby-plugin-paginated-collection which writes paginated data to JSON files",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/gatsby-paginated-collection-json-files.esm.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "prepare": "npm run build",
+    "release": "standard-version"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "pagination"
+  ],
+  "author": "Angelo Ashmore <angelo.ashmore@walltowall.com>",
+  "peerDependencies": {
+    "gatsby-plugin-paginated-collection": ">=0.2.0"
+  },
+  "devDependencies": {
+    "tsdx": "^0.12.3",
+    "tslib": "^1.11.1",
+    "typescript": "^3.8.3"
+  },
+  "standard-version": {
+    "tagPrefix": "gatsby-paginated-collection-json-files@"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "proseWrap": "always",
+    "printWidth": 80
+  }
+}

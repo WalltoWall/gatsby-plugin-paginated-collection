@@ -1,24 +1,9 @@
 {
-  "version": "0.1.4",
-  "license": "MIT",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
-  "files": [
-    "dist",
-    "gatsby-node.js"
-  ],
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "pagination"
-  ],
-  "scripts": {
-    "start": "tsdx watch -i ./src/gatsby-node.ts",
-    "build": "tsdx build -i ./src/gatsby-node.ts",
-    "test": "tsdx test",
-    "lint": "tsdx lint",
-    "prepare": "npm run build",
-    "release": "standard-version"
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
   },
   "husky": {
     "hooks": {
@@ -30,16 +15,6 @@
       "@commitlint/config-conventional"
     ]
   },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true,
-    "trailingComma": "all",
-    "proseWrap": "always",
-    "printWidth": 80
-  },
-  "name": "gatsby-plugin-paginated-collection",
-  "author": "Angelo Ashmore <angelo.ashmore@walltowall.com>",
-  "module": "dist/gatsby-plugin-paginated-collection.esm.js",
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
@@ -47,9 +22,6 @@
     "gatsby": "^2.19.43",
     "husky": "^4.2.3",
     "prettier": "^1.19.1",
-    "standard-version": "^7.1.0",
-    "tsdx": "^0.12.3",
-    "tslib": "^1.11.1",
-    "typescript": "^3.8.3"
+    "standard-version": "^7.1.0"
   }
 }
