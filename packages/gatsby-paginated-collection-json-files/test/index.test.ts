@@ -1,6 +1,61 @@
+import path from 'path'
+import fs from 'fs'
+import mockFs from 'mock-fs'
 import { CreatePagesArgs } from 'gatsby'
 
 import { onPostCreateNodes } from '../src'
+import { CollectionNode, NodeType } from 'gatsby-plugin-paginated-collection'
+
+const MOCK_PROGRAM_DIRECTORY_PATH = '/__PROGRAM_DIRECTORY__/'
+
+const rootPluginOptions = {
+  name: 'name',
+  query: 'query',
+  pageSize: 1,
+  firstPageSize: 1,
+  normalizer: () => [],
+  plugins: [{ resolve: 'gatsby-paginated-collection-json-files' }],
+}
+
+const nodes = [
+  { id: 'node1', foo: 'bar' },
+  { id: 'node2', foo: 'baz' },
+]
+
+const pages = [
+  {
+    id: 'page1',
+    nextPage: 'page2',
+    nodes: [nodes[0]],
+    collection: 'collection1',
+  },
+  {
+    id: 'page2',
+    previousPage: 'page1',
+    nodes: [nodes[1]],
+    collection: 'collection1',
+  },
+]
+
+const collections = [{ id: 'collection1', pages: pages.map(p => p.id) }]
+
+const mockCollectionNode: CollectionNode = {
+  id: 'id',
+  name: 'name',
+  pageSize: rootPluginOptions.pageSize,
+  firstPageSize: rootPluginOptions.firstPageSize,
+  lastPageSize: pages[pages.length - 1].nodes.length,
+  nodeCount: nodes.length,
+  pageCount: collections[0].pages.length,
+  pages: pages.map(p => p.id),
+  parent: 'parent',
+  children: [],
+  internal: {
+    type: NodeType.Collection,
+    contentDigest: 'contentDigest',
+    owner: 'gatsby-plugin-paginated-collection',
+  },
+}
 
 const mockActions = {
   deletePage: jest.fn(),
@@ -37,7 +92,9 @@ const mockGatsbyContext: CreatePagesArgs & {
   store: {
     dispatch: jest.fn(),
     subscribe: jest.fn(),
-    getState: jest.fn(),
+    getState: jest
+      .fn()
+      .mockReturnValue({ program: { directory: MOCK_PROGRAM_DIRECTORY_PATH } }),
     replaceReducer: jest.fn(),
   },
   emitter: {
@@ -58,7 +115,11 @@ const mockGatsbyContext: CreatePagesArgs & {
     listenerCount: jest.fn(),
   },
   getNodes: jest.fn(),
-  getNode: jest.fn(),
+  getNode: jest
+    .fn()
+    .mockImplementation((id: string) =>
+      [...collections, ...pages, ...nodes].find(p => p.id === id),
+    ),
   getNodesByType: jest.fn(),
   hasNodeChanged: jest.fn(),
   reporter: {
@@ -110,26 +171,108 @@ const mockGatsbyContext: CreatePagesArgs & {
   graphql: jest.fn(),
 }
 
-const rootPluginOptions = {
-  name: 'name',
-  query: 'query',
-  pageSize: 10,
-  firstPageSize: 10,
-  normalizer: () => [],
-  plugins: [{ resolve: 'gatsby-paginated-collection-json-files' }],
-}
-
-const pluginOptions = {}
-
-beforeEach(() => jest.clearAllMocks())
+beforeEach(() => {
+  jest.clearAllMocks()
+  mockFs({ MOCK_PROGRAM_DIRECTORY_PATH: {} })
+})
+afterEach(() => mockFs.restore())
 
 describe('onPostCreateNodes', () => {
   test('creates files', async () => {
     await onPostCreateNodes!(
+      mockCollectionNode,
+      {},
       mockGatsbyContext,
       rootPluginOptions,
-      pluginOptions,
-    ),
-      expect(mockGatsbyContext.actions.createNode).toMatchSnapshot()
+    )
+
+    const dir = path.join(
+      MOCK_PROGRAM_DIRECTORY_PATH,
+      'public',
+      'paginated-collections',
+    )
+    const filenames = fs.readdirSync(dir)
+    const files = filenames.map(filename =>
+      fs.readFileSync(path.join(dir, filename), 'utf-8'),
+    )
+    mockFs.restore()
+
+    expect(filenames).toEqual(Object.values(pages).map(p => `${p.id}.json`))
+    expect(files).toMatchSnapshot()
+  })
+
+  test('writes to configured directory', async () => {
+    await onPostCreateNodes!(
+      mockCollectionNode,
+      { path: 'new-path' },
+      mockGatsbyContext,
+      rootPluginOptions,
+    )
+
+    const dir = path.join(MOCK_PROGRAM_DIRECTORY_PATH, 'public', 'new-path')
+    const filenames = fs.readdirSync(dir)
+    expect(filenames).toEqual(Object.values(pages).map(p => `${p.id}.json`))
+  })
+
+  describe('expands fields', () => {
+    test('nextPage', async () => {
+      await onPostCreateNodes!(
+        mockCollectionNode,
+        { expand: ['nextPage'] },
+        mockGatsbyContext,
+        rootPluginOptions,
+      )
+
+      const dir = path.join(
+        MOCK_PROGRAM_DIRECTORY_PATH,
+        'public',
+        'paginated-collections',
+      )
+      const filenames = fs.readdirSync(dir)
+      const file = JSON.parse(
+        fs.readFileSync(path.join(dir, filenames[0]), 'utf-8'),
+      )
+      expect(file.nextPage).toEqual({ ...pages[1], nodes: undefined })
+    })
+
+    test('previousPage', async () => {
+      await onPostCreateNodes!(
+        mockCollectionNode,
+        { expand: ['previousPage'] },
+        mockGatsbyContext,
+        rootPluginOptions,
+      )
+
+      const dir = path.join(
+        MOCK_PROGRAM_DIRECTORY_PATH,
+        'public',
+        'paginated-collections',
+      )
+      const filenames = fs.readdirSync(dir)
+      const file = JSON.parse(
+        fs.readFileSync(path.join(dir, filenames[1]), 'utf-8'),
+      )
+      expect(file.previousPage).toEqual({ ...pages[0], nodes: undefined })
+    })
+
+    test('collection', async () => {
+      await onPostCreateNodes!(
+        mockCollectionNode,
+        { expand: ['collection'] },
+        mockGatsbyContext,
+        rootPluginOptions,
+      )
+
+      const dir = path.join(
+        MOCK_PROGRAM_DIRECTORY_PATH,
+        'public',
+        'paginated-collections',
+      )
+      const filenames = fs.readdirSync(dir)
+      const file = JSON.parse(
+        fs.readFileSync(path.join(dir, filenames[0]), 'utf-8'),
+      )
+      expect(file.collection).toEqual(collections[0])
+    })
   })
 })

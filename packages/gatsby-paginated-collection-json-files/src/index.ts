@@ -7,35 +7,38 @@ import {
   CollectionNode,
 } from 'gatsby-plugin-paginated-collection'
 
-const DEFAULT_PATH = 'paginated-collections'
+const DEFAULT_PLUGIN_OPTIONS = {
+  path: 'paginated-collections',
+  expand: [],
+}
 
 const writeFileP = util.promisify(fs.writeFile)
 
 interface PluginOptions {
-  path: string
-  expand: ('nextPage' | 'previousPage' | 'collection')[]
+  path?: string
+  expand?: ('nextPage' | 'previousPage' | 'collection')[]
 }
 
 type ExpandedPageNode = PageNode & {
-  nextPage?: PageNode
-  previousPage?: PageNode
+  nextPage?: PageNode & { nodes: undefined }
+  previousPage?: PageNode & { nodes: undefined }
   collection: CollectionNode
 }
 
 export const onPostCreateNodes: Plugin['onPostCreateNodes'] = async (
   node,
-  pluginOptions: PluginOptions,
+  rawPluginOptions: PluginOptions,
   gatsbyContext,
   _rootPluginOptions,
 ) => {
   const { getNode, store } = gatsbyContext
-  const program = store.getState()
+  const { program } = store.getState()
+  const pluginOptions: Required<PluginOptions> = {
+    ...DEFAULT_PLUGIN_OPTIONS,
+    ...rawPluginOptions,
+  }
 
-  const dir = path.resolve(
-    program.directory,
-    'public',
-    pluginOptions.path ?? DEFAULT_PATH,
-  )
+  const dir = path.resolve(program.directory, 'public', pluginOptions.path)
   fs.mkdirSync(dir, { recursive: true })
 
   await Promise.all(
@@ -43,19 +46,17 @@ export const onPostCreateNodes: Plugin['onPostCreateNodes'] = async (
       const page: ExpandedPageNode = getNode(pageId)
 
       if (pluginOptions.expand.includes('nextPage')) {
-        page.nextPage = getNode(page.nextPage)
-        if (page.nextPage) delete page.nextPage.nodes
+        const expansion = getNode(page.nextPage)
+        if (expansion) page.nextPage = { ...expansion, nodes: undefined }
       }
 
       if (pluginOptions.expand.includes('previousPage')) {
-        page.previousPage = getNode(page.previousPage)
-        if (page.previousPage) delete page.previousPage.nodes
+        const expansion = getNode(page.previousPage)
+        if (expansion) page.previousPage = { ...expansion, nodes: undefined }
       }
 
-      if (pluginOptions.expand.includes('collection')) {
+      if (pluginOptions.expand.includes('collection'))
         page.collection = getNode(page.collection)
-        if (page.collection) delete page.collection.nodes
-      }
 
       await writeFileP(path.join(dir, page.id + '.json'), JSON.stringify(page))
     }),
