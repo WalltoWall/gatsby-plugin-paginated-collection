@@ -29,7 +29,7 @@ plugins: [
       // In addition to your other options...
       plugins: [
         {
-          resolve: 'gatsby-paginated-collection',
+          resolve: 'gatsby-paginated-collection-json-files',
           options: {
             /**
              * Path within the site's public folder to which the plugin will
