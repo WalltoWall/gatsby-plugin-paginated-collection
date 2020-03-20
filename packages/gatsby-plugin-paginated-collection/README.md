@@ -18,6 +18,7 @@ using the plugin twice.
 
 - [Features](#features)
 - [Install](#install)
+- [Plugins](#plugins)
 - [How to use](#how-to-use)
 - [How to query](#how-to-query)
   - [Query Collections](#query-collections)
@@ -36,6 +37,13 @@ using the plugin twice.
 ```sh
 npm install --save gatsby-source-paginated-collection
 ```
+
+## Plugins
+
+Add functionality to your collections via plugins.
+
+- [`gatsby-paginated-collection-json-files`](../gatsby-paginated-collection-json-files/README.md):
+  Writes pages of a collection to JSON files.
 
 ## How to use
 
