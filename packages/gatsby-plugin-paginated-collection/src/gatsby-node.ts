@@ -5,8 +5,10 @@ import {
 } from 'gatsby'
 
 import { chunk, fmtMsg, createCollectionNode } from './utils'
-import { ProvidedPluginOptions, PluginOptions } from './types'
+import { ProvidedPluginOptions, PluginOptions, Plugin } from './types'
 import { types } from './gqlTypes'
+
+export { Plugin, NodeType, PageNode, CollectionNode } from './types'
 
 export const DEFAULT_PLUGIN_OPTIONS = {
   pageSize: 10,
@@ -26,9 +28,8 @@ export const createPages: GatsbyNode['createPages'] = (
       DEFAULT_PLUGIN_OPTIONS.pageSize,
   }
 
-  const { graphql, reporter } = gatsbyContext
+  const { graphql, getNode, reporter } = gatsbyContext
   const { name, query, pageSize, normalizer, plugins } = pluginOptions
-  const requiredPlugins = plugins.map(plugin => require(plugin.resolve))
 
   const asyncFn = async () => {
     const queryResult = await graphql(query)
@@ -62,10 +63,18 @@ export const createPages: GatsbyNode['createPages'] = (
       )
 
     const chunks = chunk(pageSize, items)
-    createCollectionNode(chunks, gatsbyContext, pluginOptions)
+    const nodeId = createCollectionNode(chunks, gatsbyContext, pluginOptions)
+    const node = getNode(nodeId)
 
-    for (const plugin of requiredPlugins)
-      await plugin?.onPostCreateNodes?.(gatsbyContext, pluginOptions)
+    for (const plugin of plugins) {
+      const requiredPlugin: Plugin = require(plugin.resolve)
+      await requiredPlugin?.onPostCreateNodes?.(
+        node,
+        plugin.options,
+        gatsbyContext,
+        pluginOptions,
+      )
+    }
   }
 
   asyncFn().finally(() => callback && callback(null))

@@ -1,33 +1,34 @@
 import fs from 'fs'
 import path from 'path'
 import util from 'util'
-import {
-  Plugin,
-  NodeType,
-  CollectionNode,
-  PageNode,
-} from 'gatsby-plugin-paginated-collection'
+import { Plugin, PageNode } from 'gatsby-plugin-paginated-collection'
+
+const DEFAULT_PATH = 'paginated-collections'
 
 const writeFileP = util.promisify(fs.writeFile)
 
+interface PluginOptions {
+  path: string
+}
+
 export const onPostCreateNodes: Plugin['onPostCreateNodes'] = async (
+  node,
+  pluginOptions: PluginOptions,
   gatsbyContext,
   _rootPluginOptions,
-  _pluginOptions,
 ) => {
-  const { getNode, getNodesByType, store } = gatsbyContext
+  const { getNode, store } = gatsbyContext
   const program = store.getState()
 
-  const collections: CollectionNode[] = await getNodesByType(
-    NodeType.Collection,
+  const dir = path.resolve(
+    program.directory,
+    'public',
+    pluginOptions.path ?? DEFAULT_PATH,
   )
-  const pages = collections.flatMap(coll => coll.pages)
-
-  const dir = path.resolve(program.directory, 'public', 'paginated-collection')
   fs.mkdirSync(dir, { recursive: true })
 
   await Promise.all(
-    pages.map(async pageId => {
+    node.pages.map(async pageId => {
       const page: PageNode = getNode(pageId)
       await writeFileP(path.join(dir, page.id + '.json'), JSON.stringify(page))
     }),

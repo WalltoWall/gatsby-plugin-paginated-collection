@@ -68,8 +68,9 @@ export interface ProvidedPluginOptions extends GatsbyPluginOptions {
 
 export interface Plugin {
   onPostCreateNodes?(
+    node: CollectionNode,
+    pluginOptions: unknown,
     gatsbyContext: CreatePagesArgs & { traceId: 'initial-createPages' },
     rootPluginOptions: PluginOptions,
-    pluginOptions: unknown,
   ): void | Promise<void>
 }

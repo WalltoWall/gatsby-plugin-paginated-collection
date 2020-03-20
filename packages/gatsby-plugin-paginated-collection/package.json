@@ -5,7 +5,7 @@
   "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/gatsby-plugin-paginated-collection.esm.js",
-  "typings": "dist/index.d.ts",
+  "typings": "dist/gatsby-node.d.ts",
   "files": [
     "dist",
     "gatsby-node.js"
