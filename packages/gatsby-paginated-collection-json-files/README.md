@@ -36,6 +36,14 @@ plugins: [
              * write files. Default: 'paginated-collections'
              */
             path: 'paginated-collections',
+
+            /**
+             * Include data for the next or previous page or the collection
+             * itself. All fields except `nodes` will be included if expanded.
+             * The following fields can be expanded: nextPage, previousPage,
+             * collection. Default: no fields
+             */
+            expand: ['nextPage', 'previousPage'],
           },
         },
       ],
