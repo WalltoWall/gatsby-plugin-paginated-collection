@@ -8,6 +8,8 @@ import {
 import { ProvidedPluginOptions } from '../src/types'
 import * as examplePlugin from './__mocks__/gatsby-paginated-collection-example-plugin'
 
+const mockPageNode = { foo: 'bar' }
+
 const mockActions = {
   deletePage: jest.fn(),
   createPage: jest.fn(),
@@ -64,7 +66,7 @@ const mockGatsbyContext: CreatePagesArgs & {
     listenerCount: jest.fn(),
   },
   getNodes: jest.fn(),
-  getNode: jest.fn(),
+  getNode: jest.fn().mockReturnValue(mockPageNode),
   getNodesByType: jest.fn(),
   hasNodeChanged: jest.fn(),
   reporter: {
@@ -133,7 +135,12 @@ const pluginOptions: ProvidedPluginOptions = {
     (queryResult as typeof mockQueryResult).data.allNode.edges.map(node => ({
       foo: node.foo,
     })),
-  plugins: [{ resolve: 'gatsby-paginated-collection-example-plugin' }],
+  plugins: [
+    {
+      resolve: 'gatsby-paginated-collection-example-plugin',
+      options: { foo: 'bar' },
+    },
+  ],
 }
 
 beforeAll(() => {
@@ -160,6 +167,8 @@ describe('sourceNodes', () => {
       )
 
       expect(examplePlugin.onPostCreateNodes).toHaveBeenLastCalledWith(
+        mockPageNode,
+        pluginOptions.plugins[0].options,
         mockGatsbyContext,
         {
           pageSize: DEFAULT_PLUGIN_OPTIONS.pageSize,
