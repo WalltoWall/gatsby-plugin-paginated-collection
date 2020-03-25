@@ -42,7 +42,7 @@ npm install --save gatsby-source-paginated-collection
 
 Add functionality to your collections via plugins.
 
-- [`gatsby-paginated-collection-json-files`](../gatsby-paginated-collection-json-files/README.md):
+- [`gatsby-paginated-collection-json-files`](https://github.com/WalltoWall/gatsby-plugin-paginated-collection/tree/master/packages/gatsby-paginated-collection-json-files):
   Writes pages of a collection to JSON files.
 
 ## How to use
