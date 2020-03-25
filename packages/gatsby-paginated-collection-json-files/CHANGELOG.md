@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/angeloashmore/gatsby-plugin-paginated-collection/compare/gatsby-paginated-collection-json-files@0.1.1...gatsby-paginated-collection-json-files@0.1.2) (2020-03-25)
+
+
+### Bug Fixes
+
+* remove additional non-whitelisted exports from gatsby-node ([c7e8f23](https://github.com/angeloashmore/gatsby-plugin-paginated-collection/commit/c7e8f2302f2c46219b52ec148f14e920ab767c2f))
+
 ### [0.1.1](https://github.com/angeloashmore/gatsby-plugin-paginated-collection/compare/gatsby-paginated-collection-json-files@0.1.0...gatsby-paginated-collection-json-files@0.1.1) (2020-03-25)
 
 
