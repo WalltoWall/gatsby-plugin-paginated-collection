@@ -57,6 +57,9 @@ export const onPostCreateNodes: Plugin['onPostCreateNodes'] = async (
       if (pluginOptions.expand.includes('collection'))
         page.collection = getNode(page.collection)
 
+      // Remove internal Gatsby fields.
+      const { internal, children, parent, ...trimmedPage } = page
+
       const fileBasename =
         typeof pluginOptions.filename === 'function'
           ? String(pluginOptions.filename(page))
@@ -64,7 +67,7 @@ export const onPostCreateNodes: Plugin['onPostCreateNodes'] = async (
 
       await fs.writeFile(
         path.join(dir, fileBasename + '.json'),
-        JSON.stringify(page),
+        JSON.stringify(trimmedPage),
       )
     }),
   )

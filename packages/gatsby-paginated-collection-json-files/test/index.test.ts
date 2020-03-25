@@ -32,6 +32,9 @@ const pages = [
     nextPage: 'page2',
     nodes: [nodes[0]],
     collection: 'collection1',
+    internal: {},
+    children: [],
+    parent: null,
   },
   {
     id: 'page2',
@@ -39,6 +42,9 @@ const pages = [
     previousPage: 'page1',
     nodes: [nodes[1]],
     collection: 'collection1',
+    internal: {},
+    children: [],
+    parent: null,
   },
 ]
 
