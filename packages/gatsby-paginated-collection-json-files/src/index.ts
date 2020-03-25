@@ -1,25 +1,24 @@
-import fs from 'fs'
+import { promises as fs } from 'fs'
 import path from 'path'
-import util from 'util'
 import {
   Plugin,
   PageNode,
   CollectionNode,
 } from 'gatsby-plugin-paginated-collection'
 
-const DEFAULT_PLUGIN_OPTIONS = {
+const DEFAULT_PLUGIN_OPTIONS: Required<PluginOptions> = {
   path: 'paginated-collections',
   expand: [],
+  filename: 'id',
 }
 
-const writeFileP = util.promisify(fs.writeFile)
-
-interface PluginOptions {
+export interface PluginOptions {
   path?: string
   expand?: ('nextPage' | 'previousPage' | 'collection')[]
+  filename?: 'id' | 'index' | ((node: PageNode) => string)
 }
 
-type ExpandedPageNode = PageNode & {
+export type ExpandedPageNode = PageNode & {
   nextPage?: PageNode & { nodes: undefined }
   previousPage?: PageNode & { nodes: undefined }
   collection: CollectionNode
@@ -39,7 +38,7 @@ export const onPostCreateNodes: Plugin['onPostCreateNodes'] = async (
   }
 
   const dir = path.resolve(program.directory, 'public', pluginOptions.path)
-  fs.mkdirSync(dir, { recursive: true })
+  await fs.mkdir(dir, { recursive: true })
 
   await Promise.all(
     node.pages.map(async pageId => {
@@ -58,7 +57,15 @@ export const onPostCreateNodes: Plugin['onPostCreateNodes'] = async (
       if (pluginOptions.expand.includes('collection'))
         page.collection = getNode(page.collection)
 
-      await writeFileP(path.join(dir, page.id + '.json'), JSON.stringify(page))
+      const fileBasename =
+        typeof pluginOptions.filename === 'function'
+          ? String(pluginOptions.filename(page))
+          : page[pluginOptions.filename]
+
+      await fs.writeFile(
+        path.join(dir, fileBasename + '.json'),
+        JSON.stringify(page),
+      )
     }),
   )
 }

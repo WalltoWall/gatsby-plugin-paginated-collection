@@ -3,7 +3,7 @@ import fs from 'fs'
 import mockFs from 'mock-fs'
 import { CreatePagesArgs } from 'gatsby'
 
-import { onPostCreateNodes } from '../src'
+import { onPostCreateNodes, PluginOptions } from '../src'
 import { CollectionNode, NodeType } from 'gatsby-plugin-paginated-collection'
 
 const MOCK_PROGRAM_DIRECTORY_PATH = '/__PROGRAM_DIRECTORY__/'
@@ -25,12 +25,14 @@ const nodes = [
 const pages = [
   {
     id: 'page1',
+    index: 0,
     nextPage: 'page2',
     nodes: [nodes[0]],
     collection: 'collection1',
   },
   {
     id: 'page2',
+    index: 1,
     previousPage: 'page1',
     nodes: [nodes[1]],
     collection: 'collection1',
@@ -273,6 +275,69 @@ describe('onPostCreateNodes', () => {
         fs.readFileSync(path.join(dir, filenames[0]), 'utf-8'),
       )
       expect(file.collection).toEqual(collections[0])
+    })
+  })
+
+  describe('uses correct filename', () => {
+    test('id by default', async () => {
+      await onPostCreateNodes!(
+        mockCollectionNode,
+        {},
+        mockGatsbyContext,
+        rootPluginOptions,
+      )
+
+      const dir = path.join(
+        MOCK_PROGRAM_DIRECTORY_PATH,
+        'public',
+        'paginated-collections',
+      )
+      const filenames = fs.readdirSync(dir)
+      mockFs.restore()
+
+      expect(filenames).toEqual(Object.values(pages).map(p => `${p.id}.json`))
+    })
+
+    test('determined by property name', async () => {
+      await onPostCreateNodes!(
+        mockCollectionNode,
+        { filename: 'index' },
+        mockGatsbyContext,
+        rootPluginOptions,
+      )
+
+      const dir = path.join(
+        MOCK_PROGRAM_DIRECTORY_PATH,
+        'public',
+        'paginated-collections',
+      )
+      const filenames = fs.readdirSync(dir)
+      mockFs.restore()
+
+      expect(filenames).toEqual(
+        Object.values(pages).map(p => `${p.index}.json`),
+      )
+    })
+
+    test('determined by function', async () => {
+      await onPostCreateNodes!(
+        mockCollectionNode,
+        { filename: node => node.index.toString() } as PluginOptions,
+        mockGatsbyContext,
+        rootPluginOptions,
+      )
+
+      const dir = path.join(
+        MOCK_PROGRAM_DIRECTORY_PATH,
+        'public',
+        'paginated-collections',
+      )
+      const filenames = fs.readdirSync(dir)
+      mockFs.restore()
+
+      expect(filenames).toEqual(
+        Object.values(pages).map(p => `${p.index}.json`),
+      )
     })
   })
 })
