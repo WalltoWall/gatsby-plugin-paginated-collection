@@ -4,7 +4,10 @@ import mockFs from 'mock-fs'
 import { CreatePagesArgs } from 'gatsby'
 
 import { onPostCreateNodes, PluginOptions } from '../src'
-import { CollectionNode, NodeType } from 'gatsby-plugin-paginated-collection'
+import {
+  CollectionNode,
+  NodeType,
+} from 'gatsby-plugin-paginated-collection/src/types'
 
 const MOCK_PROGRAM_DIRECTORY_PATH = '/__PROGRAM_DIRECTORY__/'
 
@@ -39,7 +42,7 @@ const pages = [
   },
 ]
 
-const collections = [{ id: 'collection1', pages: pages.map(p => p.id) }]
+const collections = [{ id: 'collection1', pages: pages.map((p) => p.id) }]
 
 const mockCollectionNode: CollectionNode = {
   id: 'id',
@@ -49,7 +52,7 @@ const mockCollectionNode: CollectionNode = {
   lastPageSize: pages[pages.length - 1].nodes.length,
   nodeCount: nodes.length,
   pageCount: collections[0].pages.length,
-  pages: pages.map(p => p.id),
+  pages: pages.map((p) => p.id),
   parent: 'parent',
   children: [],
   internal: {
@@ -120,7 +123,7 @@ const mockGatsbyContext: CreatePagesArgs & {
   getNode: jest
     .fn()
     .mockImplementation((id: string) =>
-      [...collections, ...pages, ...nodes].find(p => p.id === id),
+      [...collections, ...pages, ...nodes].find((p) => p.id === id),
     ),
   getNodesByType: jest.fn(),
   hasNodeChanged: jest.fn(),
@@ -194,12 +197,12 @@ describe('onPostCreateNodes', () => {
       'paginated-collections',
     )
     const filenames = fs.readdirSync(dir)
-    const files = filenames.map(filename =>
+    const files = filenames.map((filename) =>
       fs.readFileSync(path.join(dir, filename), 'utf-8'),
     )
     mockFs.restore()
 
-    expect(filenames).toEqual(Object.values(pages).map(p => `${p.id}.json`))
+    expect(filenames).toEqual(Object.values(pages).map((p) => `${p.id}.json`))
     expect(files).toMatchSnapshot()
   })
 
@@ -213,7 +216,7 @@ describe('onPostCreateNodes', () => {
 
     const dir = path.join(MOCK_PROGRAM_DIRECTORY_PATH, 'public', 'new-path')
     const filenames = fs.readdirSync(dir)
-    expect(filenames).toEqual(Object.values(pages).map(p => `${p.id}.json`))
+    expect(filenames).toEqual(Object.values(pages).map((p) => `${p.id}.json`))
   })
 
   describe('expands fields', () => {
@@ -295,7 +298,7 @@ describe('onPostCreateNodes', () => {
       const filenames = fs.readdirSync(dir)
       mockFs.restore()
 
-      expect(filenames).toEqual(Object.values(pages).map(p => `${p.id}.json`))
+      expect(filenames).toEqual(Object.values(pages).map((p) => `${p.id}.json`))
     })
 
     test('determined by property name', async () => {
@@ -315,14 +318,14 @@ describe('onPostCreateNodes', () => {
       mockFs.restore()
 
       expect(filenames).toEqual(
-        Object.values(pages).map(p => `${p.index}.json`),
+        Object.values(pages).map((p) => `${p.index}.json`),
       )
     })
 
     test('determined by function', async () => {
       await onPostCreateNodes!(
         mockCollectionNode,
-        { filename: node => node.index.toString() } as PluginOptions,
+        { filename: (node) => node.index.toString() } as PluginOptions,
         mockGatsbyContext,
         rootPluginOptions,
       )
@@ -336,7 +339,7 @@ describe('onPostCreateNodes', () => {
       mockFs.restore()
 
       expect(filenames).toEqual(
-        Object.values(pages).map(p => `${p.index}.json`),
+        Object.values(pages).map((p) => `${p.index}.json`),
       )
     })
   })

@@ -8,7 +8,7 @@ import { chunk, fmtMsg, createCollectionNode } from './utils'
 import { ProvidedPluginOptions, PluginOptions, Plugin } from './types'
 import { types } from './gqlTypes'
 
-export const DEFAULT_PLUGIN_OPTIONS = {
+const DEFAULT_PLUGIN_OPTIONS = {
   pageSize: 10,
 }
 

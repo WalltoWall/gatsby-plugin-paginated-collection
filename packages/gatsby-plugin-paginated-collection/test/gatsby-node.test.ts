@@ -1,10 +1,6 @@
 import { CreatePagesArgs, CreateSchemaCustomizationArgs } from 'gatsby'
 
-import {
-  createPages,
-  createSchemaCustomization,
-  DEFAULT_PLUGIN_OPTIONS,
-} from '../src/gatsby-node'
+import { createPages, createSchemaCustomization } from '../src/gatsby-node'
 import { ProvidedPluginOptions } from '../src/types'
 import * as examplePlugin from './__mocks__/gatsby-paginated-collection-example-plugin'
 
@@ -166,15 +162,13 @@ describe('sourceNodes', () => {
         createPages!(mockGatsbyContext, pluginOptions, res),
       )
 
-      expect(examplePlugin.onPostCreateNodes).toHaveBeenLastCalledWith(
+      expect(
+        examplePlugin.onPostCreateNodes,
+      ).toHaveBeenLastCalledWith(
         mockPageNode,
         pluginOptions.plugins[0].options,
         mockGatsbyContext,
-        {
-          pageSize: DEFAULT_PLUGIN_OPTIONS.pageSize,
-          firstPageSize: DEFAULT_PLUGIN_OPTIONS.pageSize,
-          ...pluginOptions,
-        },
+        { pageSize: 10, firstPageSize: 10, ...pluginOptions },
       )
     })
   })
