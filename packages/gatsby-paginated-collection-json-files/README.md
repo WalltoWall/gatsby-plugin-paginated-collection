@@ -44,6 +44,17 @@ plugins: [
              * collection. Default: no fields
              */
             expand: ['nextPage', 'previousPage'],
+
+            /**
+             * Configure the filename of the JSON files. The following values
+             * are valid:
+             *   - "id": ID of the page
+             *   - "index": Index of the page
+             *   - A function that returns a string. e.g. (page) => page.id
+             *
+             * Default: 'id'
+             */
+            filename: 'id',
           },
         },
       ],
