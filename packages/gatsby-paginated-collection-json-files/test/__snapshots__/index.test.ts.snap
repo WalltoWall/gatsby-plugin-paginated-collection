@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`onPostCreateNodes creates files 1`] = `
+Array [
+  "{\\"id\\":\\"page1\\",\\"index\\":0,\\"nextPage\\":\\"page2\\",\\"nodes\\":[{\\"id\\":\\"node1\\",\\"foo\\":\\"bar\\"}],\\"collection\\":\\"collection1\\"}",
+  "{\\"id\\":\\"page2\\",\\"index\\":1,\\"previousPage\\":\\"page1\\",\\"nodes\\":[{\\"id\\":\\"node2\\",\\"foo\\":\\"baz\\"}],\\"collection\\":\\"collection1\\"}",
+]
+`;

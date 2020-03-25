@@ -3,7 +3,7 @@ import { CreatePagesArgs } from 'gatsby'
 import {
   PluginOptions,
   ID,
-  Node,
+  NormalizedNode,
   NodeType,
   CollectionNodeInput,
   PageNodeInput,
@@ -49,10 +49,10 @@ export const chunk = <T>(size: number, arr: T[]): T[][] =>
  * @returns The created Gatsby Node.
  */
 const createPageNode = (
-  chunk: Node[],
+  chunk: NormalizedNode[],
   id: ID,
   index: number,
-  chunkTuples: [ID, Node[]][],
+  chunkTuples: [ID, NormalizedNode[]][],
   collectionId: ID,
   gatsbyContext: CreatePagesArgs,
 ): PageNodeInput => {
@@ -93,7 +93,7 @@ const createPageNode = (
  * @returns The created Gatsby Node.
  */
 export const createCollectionNode = (
-  chunks: Node[][],
+  chunks: NormalizedNode[][],
   gatsbyContext: CreatePagesArgs,
   pluginOptions: PluginOptions,
 ): ID => {
@@ -104,7 +104,7 @@ export const createCollectionNode = (
   const id = createNodeId(`${NodeType.Collection} ${name}`)
 
   const pageNodes = chunks
-    .map<[ID, Node[]]>((chunk, index) => [
+    .map<[ID, NormalizedNode[]]>((chunk, index) => [
       createNodeId(`${NodeType.Page} ${name} ${index}`),
       chunk,
     ])

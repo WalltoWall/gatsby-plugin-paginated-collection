@@ -1,4 +1,9 @@
-import { PluginOptions as GatsbyPluginOptions, NodeInput } from 'gatsby'
+import {
+  PluginOptions as GatsbyPluginOptions,
+  NodeInput,
+  CreatePagesArgs,
+  Node,
+} from 'gatsby'
 
 export type ID = string
 
@@ -6,6 +11,10 @@ export enum NodeType {
   Collection = 'PaginatedCollection',
   Page = 'PaginatedCollectionPage',
 }
+
+export type NormalizedNode = Record<string, unknown>
+
+export type PageNode = Node & PageNodeInput
 
 export interface PageNodeInput extends NodeInput {
   collection: ID
@@ -15,11 +24,13 @@ export interface PageNodeInput extends NodeInput {
   previousPage: ID | undefined
   hasPreviousPage: boolean
   nodeCount: number
-  nodes: Node[]
+  nodes: NormalizedNode[]
   internal: NodeInput['internal'] & {
     type: NodeType.Page
   }
 }
+
+export type CollectionNode = Node & CollectionNodeInput
 
 export interface CollectionNodeInput extends NodeInput {
   name: string
@@ -39,13 +50,11 @@ export interface GraphQLResult {
   data?: unknown
 }
 
-export interface Node {
-  [key: string]: unknown
-}
+export type PluginOptions = Required<ProvidedPluginOptions>
 
-export interface PluginOptions extends ProvidedPluginOptions {
-  pageSize: number
-  firstPageSize: number
+export interface PluginConfig {
+  resolve: string
+  options?: Record<string, unknown>
 }
 
 export interface ProvidedPluginOptions extends GatsbyPluginOptions {
@@ -53,5 +62,15 @@ export interface ProvidedPluginOptions extends GatsbyPluginOptions {
   query: string
   pageSize?: number
   firstPageSize?: number
-  normalizer: (input: GraphQLResult) => Node[]
+  normalizer: (input: GraphQLResult) => NormalizedNode[]
+  plugins: PluginConfig[]
+}
+
+export interface Plugin {
+  onPostCreateNodes?(
+    node: CollectionNode,
+    pluginOptions: unknown,
+    gatsbyContext: CreatePagesArgs & { traceId: 'initial-createPages' },
+    rootPluginOptions: PluginOptions,
+  ): void | Promise<void>
 }
