@@ -4,7 +4,7 @@ import {
   Plugin,
   PageNode,
   CollectionNode,
-} from 'gatsby-plugin-paginated-collection'
+} from 'gatsby-plugin-paginated-collection/dist/types'
 
 const DEFAULT_PLUGIN_OPTIONS: Required<PluginOptions> = {
   path: 'paginated-collections',
@@ -41,7 +41,7 @@ export const onPostCreateNodes: Plugin['onPostCreateNodes'] = async (
   await fs.mkdir(dir, { recursive: true })
 
   await Promise.all(
-    node.pages.map(async pageId => {
+    node.pages.map(async (pageId) => {
       const page: ExpandedPageNode = getNode(pageId)
 
       if (pluginOptions.expand.includes('nextPage')) {
