@@ -42,7 +42,7 @@ npm install --save gatsby-source-paginated-collection
 
 Add functionality to your collections via plugins.
 
-- [`gatsby-paginated-collection-json-files`](../gatsby-paginated-collection-json-files/README.md):
+- [`gatsby-paginated-collection-json-files`](https://github.com/WalltoWall/gatsby-plugin-paginated-collection/tree/master/packages/gatsby-paginated-collection-json-files):
   Writes pages of a collection to JSON files.
 
 ## How to use
@@ -55,14 +55,14 @@ plugins: [
    * collections of data using different names.
    */
   {
-    resolve: 'gatsby-source-paginated-collection',
+    resolve: "gatsby-source-paginated-collection",
     options: {
       /**
        * A name to identify your collection. If you have multiple instances of
        * this plugin, this will allow you to identify each collection. This is
        * required.
        */
-      name: 'blogPosts',
+      name: "blogPosts",
 
       /**
        * The number of nodes to include in each page. Default: 10.
@@ -106,11 +106,11 @@ plugins: [
           id: node.id,
           path: node.frontmatter.path,
           title: node.frontmatter.title,
-          excerpt: node.frontmatter.excerpt,
-        })),
-    },
-  },
-]
+          excerpt: node.frontmatter.excerpt
+        }))
+    }
+  }
+];
 ```
 
 ## How to query
@@ -227,9 +227,9 @@ to pass the pagination information.
    module.exports = {
      plugins: [
        {
-         resolve: 'gatsby-plugin-paginated-collection',
+         resolve: "gatsby-plugin-paginated-collection",
          options: {
-           name: 'blog-posts',
+           name: "blog-posts",
            query: `
              {
                allMarkdownRemark {
@@ -248,12 +248,12 @@ to pass the pagination information.
              data.allMarkdownRemark.nodes.map(node => ({
                id: node.id,
                url: `/blog/${node.frontmatter.path}`,
-               title: node.frontmatter.title,
-             })),
-         },
-       },
-     ],
-   }
+               title: node.frontmatter.title
+             }))
+         }
+       }
+     ]
+   };
    ```
 
 1. **Create a blog posts template**
@@ -263,12 +263,12 @@ to pass the pagination information.
    ```javascript
    // src/templates/blog.js
 
-   import React from 'react'
-   import { Link, graphql } from 'gatsby'
+   import React from "react";
+   import { Link, graphql } from "gatsby";
 
    const BlogPage = ({ data }) => {
-     const page = data.paginatedCollectionPage
-     const blogPosts = page.nodes
+     const page = data.paginatedCollectionPage;
+     const blogPosts = page.nodes;
 
      return (
        <div className="blog-posts">
@@ -289,10 +289,10 @@ to pass the pagination information.
            <Link to={`/blog/${page.nextPage.id}`}>Next page</Link>
          )}
        </div>
-     )
-   }
+     );
+   };
 
-   export default BlogPage
+   export default BlogPage;
 
    export const query = graphql`
      query($id: String!) {
@@ -312,7 +312,7 @@ to pass the pagination information.
          }
        }
      }
-   `
+   `;
    ```
 
 1. **Create a page for each paginated group of blog posts**
@@ -325,10 +325,10 @@ to pass the pagination information.
    // gatsby-node.js
 
    exports.createPages = async gatsbyContext => {
-     const { actions, graphql } = gatsbyContext
-     const { createPage } = actions
+     const { actions, graphql } = gatsbyContext;
+     const { createPage } = actions;
 
-     const blogTemplate = path.resolve('src/templates/blog.js')
+     const blogTemplate = path.resolve("src/templates/blog.js");
 
      const { data } = await graphql(`
        {
@@ -338,23 +338,23 @@ to pass the pagination information.
            }
          }
        }
-     `)
-     const pages = data.paginatedCollection.pages
+     `);
+     const pages = data.paginatedCollection.pages;
 
      for (const page of pages)
        createPage({
          path: `/blog/${page.id}`,
          component: blogTemplate,
-         context: { id: page.id },
-       })
+         context: { id: page.id }
+       });
 
      // Create the first page with a nice URL
      createPage({
-       path: '/blog/',
+       path: "/blog/",
        component: blogTemplate,
-       context: { id: pages[0] },
-     })
-   }
+       context: { id: pages[0] }
+     });
+   };
    ```
 
 </details>
@@ -387,9 +387,9 @@ more pages to fetch or if we are on the last page.
    module.exports = {
      plugins: [
        {
-         resolve: 'gatsby-plugin-paginated-collection',
+         resolve: "gatsby-plugin-paginated-collection",
          options: {
-           name: 'blog-posts',
+           name: "blog-posts",
            query: `
              {
                allMarkdownRemark {
@@ -408,12 +408,12 @@ more pages to fetch or if we are on the last page.
              data.allMarkdownRemark.nodes.map(node => ({
                id: node.id,
                url: `/blog/${node.frontmatter.path}`,
-               title: node.frontmatter.title,
-             })),
-         },
-       },
-     ],
-   }
+               title: node.frontmatter.title
+             }))
+         }
+       }
+     ]
+   };
    ```
 
 1. **Create the JSON files in `gatsby-node.js`**
@@ -432,7 +432,7 @@ more pages to fetch or if we are on the last page.
    // gatsby-node.js
 
    exports.createPages = async gatsbyContext => {
-     const { graphql } = gatsbyContext
+     const { graphql } = gatsbyContext;
 
      const queryResult = await graphql(`
        {
@@ -448,18 +448,23 @@ more pages to fetch or if we are on the last page.
            }
          }
        }
-     `)
+     `);
 
-     const collection = queryResult.data.paginatedCollection
-     const dir = path.join(__dirname, 'public', 'paginated-data', collection.id)
-     fs.mkdirSync(dir, { recursive: true })
+     const collection = queryResult.data.paginatedCollection;
+     const dir = path.join(
+       __dirname,
+       "public",
+       "paginated-data",
+       collection.id
+     );
+     fs.mkdirSync(dir, { recursive: true });
 
      for (const page of collection.pages)
        fs.writeFileSync(
          path.resolve(dir, `${page.id}.json`),
-         JSON.stringify(page),
-       )
-   }
+         JSON.stringify(page)
+       );
+   };
    ```
 
 1. **Create a Blog page with the fetching handler**
@@ -473,29 +478,29 @@ more pages to fetch or if we are on the last page.
    ```javascript
    // src/pages/blog.js
 
-   import React, { useState, useCallback } from 'react'
-   import { Link, graphql, withPrefix } from 'gatsby'
+   import React, { useState, useCallback } from "react";
+   import { Link, graphql, withPrefix } from "gatsby";
 
    const BlogPage = ({ data }) => {
-     const initialPage = data.paginatedCollectionPage
-     const [latestPage, setLatestPage] = useState(initialPage)
-     const [blogPosts, setBlogPosts] = useState(initialPage.nodes)
+     const initialPage = data.paginatedCollectionPage;
+     const [latestPage, setLatestPage] = useState(initialPage);
+     const [blogPosts, setBlogPosts] = useState(initialPage.nodes);
 
      const loadNextPage = useCallback(async () => {
-       if (!latestPage.hasNextPage) return
+       if (!latestPage.hasNextPage) return;
 
-       const collectionId = latestPage.collection.id
-       const nextPageId = latestPage.nextPage.id
+       const collectionId = latestPage.collection.id;
+       const nextPageId = latestPage.nextPage.id;
        const path = withPrefix(
-         `/paginated-data/${collectionId}/${nextPageId}.json`,
-       )
+         `/paginated-data/${collectionId}/${nextPageId}.json`
+       );
 
-       const res = await fetch(path)
-       const json = await res.json()
+       const res = await fetch(path);
+       const json = await res.json();
 
-       setBlogPosts(state => [...state, ...json.nodes])
-       setLatestPage(json)
-     }, [latestPage])
+       setBlogPosts(state => [...state, ...json.nodes]);
+       setLatestPage(json);
+     }, [latestPage]);
 
      return (
        <div className="blog-posts">
@@ -512,10 +517,10 @@ more pages to fetch or if we are on the last page.
            </button>
          )}
        </div>
-     )
-   }
+     );
+   };
 
-   export default BlogPage
+   export default BlogPage;
 
    export const query = graphql`
      {
@@ -533,7 +538,7 @@ more pages to fetch or if we are on the last page.
          }
        }
      }
-   `
+   `;
    ```
 
 </details>
