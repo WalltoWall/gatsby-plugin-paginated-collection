@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6](https://github.com/angeloashmore/gatsby-plugin-paginated-collection/compare/gatsby-paginated-collection-json-files@0.1.5...gatsby-paginated-collection-json-files@0.1.6) (2020-03-26)
+
+
+### Bug Fixes
+
+* immutably trim page node ([b838a76](https://github.com/angeloashmore/gatsby-plugin-paginated-collection/commit/b838a76e7add10d94713738cb93d9015ad21f575))
+
 ### [0.1.5](https://github.com/angeloashmore/gatsby-plugin-paginated-collection/compare/gatsby-paginated-collection-json-files@0.1.4...gatsby-paginated-collection-json-files@0.1.5) (2020-03-26)
 
 
