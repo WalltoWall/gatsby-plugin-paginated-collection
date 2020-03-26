@@ -21,6 +21,7 @@ export interface PluginOptions {
 export type ExpandedPageNode = PageNode & {
   nextPage?: Pick<
     PageNode,
+    | 'id'
     | 'collection'
     | 'index'
     | 'nextPage'
@@ -31,6 +32,7 @@ export type ExpandedPageNode = PageNode & {
   >
   previousPage?: Pick<
     PageNode,
+    | 'id'
     | 'collection'
     | 'index'
     | 'nextPage'
@@ -41,6 +43,7 @@ export type ExpandedPageNode = PageNode & {
   >
   collection: Pick<
     CollectionNode,
+    | 'id'
     | 'name'
     | 'pageSize'
     | 'firstPageSize'
