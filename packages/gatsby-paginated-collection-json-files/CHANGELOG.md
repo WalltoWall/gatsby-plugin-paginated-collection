@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/angeloashmore/gatsby-plugin-paginated-collection/compare/gatsby-paginated-collection-json-files@0.1.3...gatsby-paginated-collection-json-files@0.1.4) (2020-03-26)
+
+
+### Bug Fixes
+
+* correctly provide plugin options to plugins ([8faf479](https://github.com/angeloashmore/gatsby-plugin-paginated-collection/commit/8faf479f0d8529ad4b7d76442e640cba0eaae440))
+* remove internal Gatsby fields from expanded nodes ([0ab36a6](https://github.com/angeloashmore/gatsby-plugin-paginated-collection/commit/0ab36a6800b36074c0470c4dd8f553669af514f2))
+
 ### [0.1.3](https://github.com/angeloashmore/gatsby-plugin-paginated-collection/compare/gatsby-paginated-collection-json-files@0.1.2...gatsby-paginated-collection-json-files@0.1.3) (2020-03-25)
 
 
