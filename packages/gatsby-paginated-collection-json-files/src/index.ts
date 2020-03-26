@@ -72,45 +72,39 @@ export const onPostCreateNodes: Plugin['onPostCreateNodes'] = async (
 
   await Promise.all(
     node.pages.map(async (pageId) => {
-      const page: ExpandedPageNode = getNode(pageId)
-
-      if (pluginOptions.expand.includes('nextPage')) {
-        const expansion = getNode(page.nextPage)
-        if (expansion)
-          page.nextPage = {
-            ...expansion,
-            nodes: undefined,
-            internal: undefined,
-            children: undefined,
-            parent: undefined,
-          }
+      const page: PageNode = getNode(pageId)
+      const trimmedPage = {
+        ...page,
+        nextPage: pluginOptions.expand.includes('nextPage')
+          ? {
+              ...getNode(page.nextPage),
+              nodes: undefined,
+              internal: undefined,
+              children: undefined,
+              parent: undefined,
+            }
+          : page.nextPage,
+        previousPage: pluginOptions.expand.includes('previousPage')
+          ? {
+              ...getNode(page.previousPage),
+              nodes: undefined,
+              internal: undefined,
+              children: undefined,
+              parent: undefined,
+            }
+          : page.previousPage,
+        collection: pluginOptions.expand.includes('collection')
+          ? {
+              ...getNode(page.collection),
+              internal: undefined,
+              children: undefined,
+              parent: undefined,
+            }
+          : page.collection,
+        internal: undefined,
+        children: undefined,
+        parent: undefined,
       }
-
-      if (pluginOptions.expand.includes('previousPage')) {
-        const expansion = getNode(page.previousPage)
-        if (expansion)
-          page.previousPage = {
-            ...expansion,
-            nodes: undefined,
-            internal: undefined,
-            children: undefined,
-            parent: undefined,
-          }
-      }
-
-      if (pluginOptions.expand.includes('collection')) {
-        const expansion = getNode(page.collection)
-        if (expansion)
-          page.collection = {
-            ...expansion,
-            internal: undefined,
-            children: undefined,
-            parent: undefined,
-          }
-      }
-
-      // Remove internal Gatsby fields.
-      const { internal, children, parent, ...trimmedPage } = page
 
       const fileBasename =
         typeof pluginOptions.filename === 'function'
