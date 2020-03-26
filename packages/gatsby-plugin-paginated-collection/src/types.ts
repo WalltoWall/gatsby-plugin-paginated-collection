@@ -54,7 +54,7 @@ export type PluginOptions = Required<ProvidedPluginOptions>
 
 export interface PluginConfig {
   resolve: string
-  options?: Record<string, unknown>
+  pluginOptions?: Record<string, unknown>
 }
 
 export interface ProvidedPluginOptions extends GatsbyPluginOptions {

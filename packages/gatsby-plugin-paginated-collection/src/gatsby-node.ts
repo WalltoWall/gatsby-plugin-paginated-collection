@@ -68,7 +68,7 @@ export const createPages: GatsbyNode['createPages'] = (
       const requiredPlugin: Plugin = require(plugin.resolve)
       await requiredPlugin?.onPostCreateNodes?.(
         node,
-        plugin.options,
+        plugin.pluginOptions,
         gatsbyContext,
         pluginOptions,
       )

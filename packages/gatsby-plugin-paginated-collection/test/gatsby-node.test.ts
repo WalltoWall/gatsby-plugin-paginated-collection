@@ -134,7 +134,8 @@ const pluginOptions: ProvidedPluginOptions = {
   plugins: [
     {
       resolve: 'gatsby-paginated-collection-example-plugin',
-      options: { foo: 'bar' },
+      // Gatsby changes "options" to "pluginOptions" automatically.
+      pluginOptions: { foo: 'bar' },
     },
   ],
 }
@@ -166,7 +167,7 @@ describe('sourceNodes', () => {
         examplePlugin.onPostCreateNodes,
       ).toHaveBeenLastCalledWith(
         mockPageNode,
-        pluginOptions.plugins[0].options,
+        pluginOptions.plugins[0].pluginOptions,
         mockGatsbyContext,
         { pageSize: 10, firstPageSize: 10, ...pluginOptions },
       )
