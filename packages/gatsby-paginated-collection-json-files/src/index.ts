@@ -19,9 +19,36 @@ export interface PluginOptions {
 }
 
 export type ExpandedPageNode = PageNode & {
-  nextPage?: PageNode & { nodes: undefined }
-  previousPage?: PageNode & { nodes: undefined }
-  collection: CollectionNode
+  nextPage?: Pick<
+    PageNode,
+    | 'collection'
+    | 'index'
+    | 'nextPage'
+    | 'hasNextPage'
+    | 'previousPage'
+    | 'hasPreviousPage'
+    | 'nodeCount'
+  >
+  previousPage?: Pick<
+    PageNode,
+    | 'collection'
+    | 'index'
+    | 'nextPage'
+    | 'hasNextPage'
+    | 'previousPage'
+    | 'hasPreviousPage'
+    | 'nodeCount'
+  >
+  collection: Pick<
+    CollectionNode,
+    | 'name'
+    | 'pageSize'
+    | 'firstPageSize'
+    | 'lastPageSize'
+    | 'nodeCount'
+    | 'pageCount'
+    | 'pages'
+  >
 }
 
 export const onPostCreateNodes: Plugin['onPostCreateNodes'] = async (
@@ -46,16 +73,38 @@ export const onPostCreateNodes: Plugin['onPostCreateNodes'] = async (
 
       if (pluginOptions.expand.includes('nextPage')) {
         const expansion = getNode(page.nextPage)
-        if (expansion) page.nextPage = { ...expansion, nodes: undefined }
+        if (expansion)
+          page.nextPage = {
+            ...expansion,
+            nodes: undefined,
+            internal: undefined,
+            children: undefined,
+            parent: undefined,
+          }
       }
 
       if (pluginOptions.expand.includes('previousPage')) {
         const expansion = getNode(page.previousPage)
-        if (expansion) page.previousPage = { ...expansion, nodes: undefined }
+        if (expansion)
+          page.previousPage = {
+            ...expansion,
+            nodes: undefined,
+            internal: undefined,
+            children: undefined,
+            parent: undefined,
+          }
       }
 
-      if (pluginOptions.expand.includes('collection'))
-        page.collection = getNode(page.collection)
+      if (pluginOptions.expand.includes('collection')) {
+        const expansion = getNode(page.collection)
+        if (expansion)
+          page.collection = {
+            ...expansion,
+            internal: undefined,
+            children: undefined,
+            parent: undefined,
+          }
+      }
 
       // Remove internal Gatsby fields.
       const { internal, children, parent, ...trimmedPage } = page

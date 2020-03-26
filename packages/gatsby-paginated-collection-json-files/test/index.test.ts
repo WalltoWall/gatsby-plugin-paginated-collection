@@ -48,7 +48,15 @@ const pages = [
   },
 ]
 
-const collections = [{ id: 'collection1', pages: pages.map((p) => p.id) }]
+const collections = [
+  {
+    id: 'collection1',
+    pages: pages.map((p) => p.id),
+    internal: {},
+    children: [],
+    parent: null,
+  },
+]
 
 const mockCollectionNode: CollectionNode = {
   id: 'id',
@@ -243,7 +251,13 @@ describe('onPostCreateNodes', () => {
       const file = JSON.parse(
         fs.readFileSync(path.join(dir, filenames[0]), 'utf-8'),
       )
-      expect(file.nextPage).toEqual({ ...pages[1], nodes: undefined })
+      expect(file.nextPage).toEqual({
+        ...pages[1],
+        nodes: undefined,
+        internal: undefined,
+        parent: undefined,
+        children: undefined,
+      })
     })
 
     test('previousPage', async () => {
@@ -263,7 +277,13 @@ describe('onPostCreateNodes', () => {
       const file = JSON.parse(
         fs.readFileSync(path.join(dir, filenames[1]), 'utf-8'),
       )
-      expect(file.previousPage).toEqual({ ...pages[0], nodes: undefined })
+      expect(file.previousPage).toEqual({
+        ...pages[0],
+        nodes: undefined,
+        internal: undefined,
+        parent: undefined,
+        children: undefined,
+      })
     })
 
     test('collection', async () => {
@@ -283,7 +303,12 @@ describe('onPostCreateNodes', () => {
       const file = JSON.parse(
         fs.readFileSync(path.join(dir, filenames[0]), 'utf-8'),
       )
-      expect(file.collection).toEqual(collections[0])
+      expect(file.collection).toEqual({
+        ...collections[0],
+        internal: undefined,
+        parent: undefined,
+        children: undefined,
+      })
     })
   })
 
