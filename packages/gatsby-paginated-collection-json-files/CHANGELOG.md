@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5](https://github.com/angeloashmore/gatsby-plugin-paginated-collection/compare/gatsby-paginated-collection-json-files@0.1.4...gatsby-paginated-collection-json-files@0.1.5) (2020-03-26)
+
+
+### Bug Fixes
+
+* include `id` in expanded page type ([d96af7b](https://github.com/angeloashmore/gatsby-plugin-paginated-collection/commit/d96af7be1d1cc20c1f62ea8a268878625e9c1663))
+
 ### [0.1.4](https://github.com/angeloashmore/gatsby-plugin-paginated-collection/compare/gatsby-paginated-collection-json-files@0.1.3...gatsby-paginated-collection-json-files@0.1.4) (2020-03-26)
 
 
