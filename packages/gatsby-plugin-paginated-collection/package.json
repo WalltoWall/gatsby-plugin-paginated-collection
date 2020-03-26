@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-paginated-collection",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Gatsby plugin which paginates a collection of data from your sources",
   "license": "MIT",
   "main": "dist/index.js",
