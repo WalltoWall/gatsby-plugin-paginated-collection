@@ -1,0 +1,250 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createPaginatedCollectionNodes creates nodes 1`] = `
+Object {
+  "firstPageSize": 10,
+  "id": "createNodeId",
+  "internal": Object {
+    "contentDigest": "createContentDigest",
+    "type": "PaginatedCollection",
+  },
+  "lastPageSize": 5,
+  "name": "name",
+  "nodeCount": 35,
+  "pageCount": 4,
+  "pageSize": 10,
+  "pages": Array [
+    "createNodeId",
+    "createNodeId",
+    "createNodeId",
+    "createNodeId",
+  ],
+}
+`;
+
+exports[`createPaginatedCollectionNodes creates nodes 2`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "collection": "createNodeId",
+        "hasNextPage": true,
+        "hasPreviousPage": false,
+        "id": "createNodeId",
+        "index": 0,
+        "internal": Object {
+          "contentDigest": "createContentDigest",
+          "type": "PaginatedCollectionPage",
+        },
+        "nextPage": "createNodeId",
+        "nodeCount": 10,
+        "nodes": Array [
+          Object {
+            "foo": 0,
+          },
+          Object {
+            "foo": 1,
+          },
+          Object {
+            "foo": 2,
+          },
+          Object {
+            "foo": 3,
+          },
+          Object {
+            "foo": 4,
+          },
+          Object {
+            "foo": 5,
+          },
+          Object {
+            "foo": 6,
+          },
+          Object {
+            "foo": 7,
+          },
+          Object {
+            "foo": 8,
+          },
+          Object {
+            "foo": 9,
+          },
+        ],
+        "previousPage": undefined,
+      },
+    ],
+    Array [
+      Object {
+        "collection": "createNodeId",
+        "hasNextPage": true,
+        "hasPreviousPage": true,
+        "id": "createNodeId",
+        "index": 1,
+        "internal": Object {
+          "contentDigest": "createContentDigest",
+          "type": "PaginatedCollectionPage",
+        },
+        "nextPage": "createNodeId",
+        "nodeCount": 10,
+        "nodes": Array [
+          Object {
+            "foo": 10,
+          },
+          Object {
+            "foo": 11,
+          },
+          Object {
+            "foo": 12,
+          },
+          Object {
+            "foo": 13,
+          },
+          Object {
+            "foo": 14,
+          },
+          Object {
+            "foo": 15,
+          },
+          Object {
+            "foo": 16,
+          },
+          Object {
+            "foo": 17,
+          },
+          Object {
+            "foo": 18,
+          },
+          Object {
+            "foo": 19,
+          },
+        ],
+        "previousPage": "createNodeId",
+      },
+    ],
+    Array [
+      Object {
+        "collection": "createNodeId",
+        "hasNextPage": true,
+        "hasPreviousPage": true,
+        "id": "createNodeId",
+        "index": 2,
+        "internal": Object {
+          "contentDigest": "createContentDigest",
+          "type": "PaginatedCollectionPage",
+        },
+        "nextPage": "createNodeId",
+        "nodeCount": 10,
+        "nodes": Array [
+          Object {
+            "foo": 20,
+          },
+          Object {
+            "foo": 21,
+          },
+          Object {
+            "foo": 22,
+          },
+          Object {
+            "foo": 23,
+          },
+          Object {
+            "foo": 24,
+          },
+          Object {
+            "foo": 25,
+          },
+          Object {
+            "foo": 26,
+          },
+          Object {
+            "foo": 27,
+          },
+          Object {
+            "foo": 28,
+          },
+          Object {
+            "foo": 29,
+          },
+        ],
+        "previousPage": "createNodeId",
+      },
+    ],
+    Array [
+      Object {
+        "collection": "createNodeId",
+        "hasNextPage": false,
+        "hasPreviousPage": true,
+        "id": "createNodeId",
+        "index": 3,
+        "internal": Object {
+          "contentDigest": "createContentDigest",
+          "type": "PaginatedCollectionPage",
+        },
+        "nextPage": undefined,
+        "nodeCount": 5,
+        "nodes": Array [
+          Object {
+            "foo": 30,
+          },
+          Object {
+            "foo": 31,
+          },
+          Object {
+            "foo": 32,
+          },
+          Object {
+            "foo": 33,
+          },
+          Object {
+            "foo": 34,
+          },
+        ],
+        "previousPage": "createNodeId",
+      },
+    ],
+    Array [
+      Object {
+        "firstPageSize": 10,
+        "id": "createNodeId",
+        "internal": Object {
+          "contentDigest": "createContentDigest",
+          "type": "PaginatedCollection",
+        },
+        "lastPageSize": 5,
+        "name": "name",
+        "nodeCount": 35,
+        "pageCount": 4,
+        "pageSize": 10,
+        "pages": Array [
+          "createNodeId",
+          "createNodeId",
+          "createNodeId",
+          "createNodeId",
+        ],
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
