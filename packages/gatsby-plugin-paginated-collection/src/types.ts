@@ -12,7 +12,7 @@ export enum NodeType {
   Page = 'PaginatedCollectionPage',
 }
 
-export type NormalizedNode = Record<string, unknown>
+export type NormalizedNode = unknown
 
 export type PageNode = Node & PageNodeInput
 
