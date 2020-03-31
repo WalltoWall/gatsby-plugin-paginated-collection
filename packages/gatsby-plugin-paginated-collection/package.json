@@ -3,20 +3,20 @@
   "version": "0.2.3",
   "description": "Gatsby plugin which paginates a collection of data from your sources",
   "license": "MIT",
-  "main": "dist/index.js",
-  "module": "dist/gatsby-plugin-paginated-collection.esm.js",
-  "typings": "dist/gatsby-node.d.ts",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "typings": "dist/src/index.d.ts",
   "files": [
     "dist",
     "gatsby-node.js"
   ],
   "scripts": {
-    "start": "tsdx watch -i ./src/gatsby-node.ts",
-    "build": "tsdx build -i ./src/gatsby-node.ts",
-    "test": "tsdx test",
-    "lint": "tsdx lint",
+    "clean": "rimraf ./dist",
+    "build": "cross-env NODE_ENV=production npm run clean && rollup -c",
+    "format": "prettier --write '{{src,docs}/**/*.{ts,tsx,md}}'",
     "prepare": "npm run build",
-    "release": "standard-version"
+    "release": "standard-version",
+    "test": "jest"
   },
   "keywords": [
     "gatsby",
@@ -25,6 +25,12 @@
   ],
   "author": "Angelo Ashmore <angelo.ashmore@walltowall.com>",
   "devDependencies": {
+    "cross-env": "^7.0.2",
+    "jest": "^25.2.4",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.3.1",
+    "rollup-plugin-typescript2": "^0.27.0",
+    "ts-jest": "^25.3.0",
     "tsdx": "^0.13.0",
     "tslib": "^1.11.1",
     "typescript": "^3.8.3"
