@@ -62,7 +62,7 @@ const createPageNode = (args: CreatePageNodeArgs): PageNodeInput => {
     },
   }
 
-  createNode(node)
+  createNode(node, { name: 'gatsby-plugin-paginated-collection' })
 
   return node
 }
@@ -144,7 +144,7 @@ export const createPaginatedCollectionNodes = (
     },
   }
 
-  createNode(node)
+  createNode(node, { name: 'gatsby-plugin-paginated-collection' })
 
   return node
 }

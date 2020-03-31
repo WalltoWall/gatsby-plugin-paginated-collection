@@ -120,6 +120,9 @@ exports[`sourceNodes creates nodes 1`] = `
         ],
         "previousPage": undefined,
       },
+      Object {
+        "name": "gatsby-plugin-paginated-collection",
+      },
     ],
     Array [
       Object {
@@ -167,6 +170,9 @@ exports[`sourceNodes creates nodes 1`] = `
           },
         ],
         "previousPage": "createNodeId",
+      },
+      Object {
+        "name": "gatsby-plugin-paginated-collection",
       },
     ],
     Array [
@@ -216,6 +222,9 @@ exports[`sourceNodes creates nodes 1`] = `
         ],
         "previousPage": "createNodeId",
       },
+      Object {
+        "name": "gatsby-plugin-paginated-collection",
+      },
     ],
     Array [
       Object {
@@ -249,6 +258,9 @@ exports[`sourceNodes creates nodes 1`] = `
         ],
         "previousPage": "createNodeId",
       },
+      Object {
+        "name": "gatsby-plugin-paginated-collection",
+      },
     ],
     Array [
       Object {
@@ -269,6 +281,9 @@ exports[`sourceNodes creates nodes 1`] = `
           "createNodeId",
           "createNodeId",
         ],
+      },
+      Object {
+        "name": "gatsby-plugin-paginated-collection",
       },
     ],
   ],
