@@ -4,7 +4,7 @@ import {
   Plugin,
   PageNode,
   CollectionNode,
-} from 'gatsby-plugin-paginated-collection/dist/types'
+} from 'gatsby-plugin-paginated-collection'
 
 const DEFAULT_PLUGIN_OPTIONS: Required<PluginOptions> = {
   path: 'paginated-collections',
