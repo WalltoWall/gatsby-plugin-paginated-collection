@@ -1,5 +1,9 @@
 import path from 'path'
-import { Plugin } from 'gatsby-plugin-paginated-collection'
+import {
+  Plugin,
+  PageNode,
+  CollectionNode,
+} from 'gatsby-plugin-paginated-collection'
 
 import {
   writePaginatedCollectionJSONFiles,
@@ -10,6 +14,42 @@ export { writePaginatedCollectionJSONFiles } from './helpers'
 
 const DEFAULT_PLUGIN_OPTIONS = {
   path: 'paginated-collections',
+}
+
+export type ExpandedPageNode = PageNode & {
+  nextPage?: Pick<
+    PageNode,
+    | 'id'
+    | 'collection'
+    | 'index'
+    | 'nextPage'
+    | 'hasNextPage'
+    | 'previousPage'
+    | 'hasPreviousPage'
+    | 'nodeCount'
+  >
+  previousPage?: Pick<
+    PageNode,
+    | 'id'
+    | 'collection'
+    | 'index'
+    | 'nextPage'
+    | 'hasNextPage'
+    | 'previousPage'
+    | 'hasPreviousPage'
+    | 'nodeCount'
+  >
+  collection: Pick<
+    CollectionNode,
+    | 'id'
+    | 'name'
+    | 'pageSize'
+    | 'firstPageSize'
+    | 'lastPageSize'
+    | 'nodeCount'
+    | 'pageCount'
+    | 'pages'
+  >
 }
 
 export interface PluginOptions {
