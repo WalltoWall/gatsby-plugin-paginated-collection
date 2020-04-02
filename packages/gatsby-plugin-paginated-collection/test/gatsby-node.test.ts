@@ -148,10 +148,18 @@ beforeAll(() => {
 
 beforeEach(() => jest.clearAllMocks())
 
-describe('sourceNodes', () => {
+describe('createPages', () => {
   test('creates nodes', async () => {
     await new Promise(res =>
       createPages!(mockGatsbyContext, pluginOptions, res),
+    )
+
+    expect(mockGatsbyContext.actions.createNode).toMatchSnapshot()
+  })
+
+  test('bails early if no options are provided', async () => {
+    await new Promise(res =>
+      createPages!(mockGatsbyContext, { plugins: [] }, res),
     )
 
     expect(mockGatsbyContext.actions.createNode).toMatchSnapshot()

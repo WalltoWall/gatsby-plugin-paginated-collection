@@ -38,6 +38,21 @@ export const createPages: GatsbyNode['createPages'] = (
   const { createNode } = actions
   const { name, query, pageSize, normalizer, plugins } = pluginOptions
 
+  // If no options are provided, assume the user is only declaring the plugin
+  // for programmatic use. Adding the plugin to `gatsby-node.js` is still
+  // necessary to register the GraphQL types.
+  if (
+    Object.keys(providedPluginOptions).filter(key => key !== 'plugins').length <
+    1
+  ) {
+    reporter.verbose(
+      fmtMsg(
+        `Plugin will only register GraphQL types since no options were provided.`,
+      ),
+    )
+    return callback && callback(null)
+  }
+
   const asyncFn = async () => {
     const queryResult = await graphql(query)
 
