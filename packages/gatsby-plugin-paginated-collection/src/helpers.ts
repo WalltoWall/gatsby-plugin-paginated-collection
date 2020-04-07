@@ -128,13 +128,15 @@ export const createPaginatedCollectionNodes = (
   )
 
   const pageNodeIds = pageNodes.map(pageNode => pageNode.id)
+  const firstPage = pageNodes[0]
+  const lastPage = pageNodes[pageNodes.length - 1]
 
   const node: CollectionNodeInput = {
     id,
     name,
     pageSize,
-    firstPageSize: pageNodes[0].nodes.length,
-    lastPageSize: pageNodes[pageNodes.length - 1].nodes.length,
+    firstPageSize: firstPage ? firstPage.nodes.length : 0,
+    lastPageSize: lastPage ? lastPage.nodes.length : 0,
     nodeCount,
     pageCount: pageNodes.length,
     pages: pageNodeIds,
