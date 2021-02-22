@@ -4,9 +4,10 @@ import {
   PluginOptions as GatsbyPluginOptions,
 } from 'gatsby'
 
-import { chunk, fmtMsg, createCollectionNode } from './utils'
+import { fmtMsg } from './utils'
 import { ProvidedPluginOptions, PluginOptions, Plugin } from './types'
 import { types } from './gqlTypes'
+import { createPaginatedCollectionNodes } from './helpers'
 
 const DEFAULT_PLUGIN_OPTIONS = {
   pageSize: 10,
@@ -26,8 +27,31 @@ export const createPages: GatsbyNode['createPages'] = (
       DEFAULT_PLUGIN_OPTIONS.pageSize,
   }
 
-  const { graphql, getNode, reporter } = gatsbyContext
+  const {
+    graphql,
+    getNode,
+    reporter,
+    actions,
+    createNodeId,
+    createContentDigest,
+  } = gatsbyContext
+  const { createNode } = actions
   const { name, query, pageSize, normalizer, plugins } = pluginOptions
+
+  // If no options are provided, assume the user is only declaring the plugin
+  // for programmatic use. Adding the plugin to `gatsby-node.js` is still
+  // necessary to register the GraphQL types.
+  if (
+    Object.keys(providedPluginOptions).filter(key => key !== 'plugins').length <
+    1
+  ) {
+    reporter.verbose(
+      fmtMsg(
+        `Plugin will only register GraphQL types since no options were provided.`,
+      ),
+    )
+    return callback && callback(null)
+  }
 
   const asyncFn = async () => {
     const queryResult = await graphql(query)
@@ -60,9 +84,15 @@ export const createPages: GatsbyNode['createPages'] = (
         ),
       )
 
-    const chunks = chunk(pageSize, items)
-    const nodeId = createCollectionNode(chunks, gatsbyContext, pluginOptions)
-    const node = getNode(nodeId)
+    const nodeInput = createPaginatedCollectionNodes({
+      collection: items,
+      name,
+      pageSize,
+      createNode,
+      createNodeId,
+      createContentDigest,
+    })
+    const node = getNode(nodeInput.id)
 
     for (const plugin of plugins) {
       const requiredPlugin: Plugin = require(plugin.resolve)

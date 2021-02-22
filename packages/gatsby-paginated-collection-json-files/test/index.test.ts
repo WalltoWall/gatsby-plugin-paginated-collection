@@ -4,10 +4,7 @@ import mockFs from 'mock-fs'
 import { CreatePagesArgs } from 'gatsby'
 
 import { onPostCreateNodes, PluginOptions } from '../src'
-import {
-  CollectionNode,
-  NodeType,
-} from 'gatsby-plugin-paginated-collection/src/types'
+import { CollectionNode, NodeType } from 'gatsby-plugin-paginated-collection'
 
 const MOCK_PROGRAM_DIRECTORY_PATH = '/__PROGRAM_DIRECTORY__/'
 

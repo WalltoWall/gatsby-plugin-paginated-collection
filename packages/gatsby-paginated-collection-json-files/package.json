@@ -1,6 +1,6 @@
 {
   "name": "gatsby-paginated-collection-json-files",
-  "version": "0.1.6",
+  "version": "0.2.0-next.2",
   "description": "Plugin for gatsby-plugin-paginated-collection which writes paginated data to JSON files",
   "license": "MIT",
   "main": "dist/index.js",

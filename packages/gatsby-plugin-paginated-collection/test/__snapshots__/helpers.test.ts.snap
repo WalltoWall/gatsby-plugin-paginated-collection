@@ -1,8 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`createPages bails early if no options are provided 1`] = `[MockFunction]`;
+exports[`createPaginatedCollectionNodes creates nodes 1`] = `
+Object {
+  "firstPageSize": 10,
+  "id": "createNodeId",
+  "internal": Object {
+    "contentDigest": "createContentDigest",
+    "type": "PaginatedCollection",
+  },
+  "lastPageSize": 5,
+  "name": "name",
+  "nodeCount": 35,
+  "pageCount": 4,
+  "pageSize": 10,
+  "pages": Array [
+    "createNodeId",
+    "createNodeId",
+    "createNodeId",
+    "createNodeId",
+  ],
+}
+`;
 
-exports[`createPages creates nodes 1`] = `
+exports[`createPaginatedCollectionNodes creates nodes 2`] = `
 [MockFunction] {
   "calls": Array [
     Array [
@@ -236,76 +256,6 @@ exports[`createPages creates nodes 1`] = `
       "type": "return",
       "value": undefined,
     },
-    Object {
-      "type": "return",
-      "value": undefined,
-    },
-  ],
-}
-`;
-
-exports[`createSchemaCustomization creates types 1`] = `
-[MockFunction] {
-  "calls": Array [
-    Array [
-      "   \\"\\"\\"
-  A paginated collection of nodes.
-  \\"\\"\\"
-  type PaginatedCollection implements Node @dontInfer {
-    \\"Name of the collection.\\"
-    name: String!
-
-    \\"Maximum number of nodes in each page.\\"
-    pageSize: Int!
-
-    \\"Number of nodes in the first page.\\"
-    firstPageSize: Int!
-
-    \\"Number of nodes in the last page.\\"
-    lastPageSize: Int!
-
-    \\"Number of nodes in the collection.\\"
-    nodeCount: Int!
-
-    \\"Number of pages in the collection.\\"
-    pageCount: Int!
-
-    \\"Pages in the collection.\\"
-    pages: [PaginatedCollectionPage!]! @link
-  }
-
-  \\"\\"\\"
-  A page in a paginated collection.
-  \\"\\"\\"
-  type PaginatedCollectionPage implements Node @dontInfer {
-    \\"Index of the page within the collection.\\"
-    index: Int!
-
-    \\"The collection to which this page belongs.\\"
-    collection: PaginatedCollection! @link
-
-    \\"The next page.\\"
-    nextPage: PaginatedCollectionPage @link
-
-    \\"Whether or not a page exists after this page.\\"
-    hasNextPage: Boolean!
-
-    \\"The previous page.\\"
-    previousPage: PaginatedCollectionPage @link
-
-    \\"Whether or not a page exists before this page.\\"
-    hasPreviousPage: Boolean!
-
-    \\"Number of nodes in this page.\\"
-    nodeCount: Int!
-
-    \\"Nodes in this page.\\"
-    nodes: [JSON!]!
-  }
-",
-    ],
-  ],
-  "results": Array [
     Object {
       "type": "return",
       "value": undefined,
